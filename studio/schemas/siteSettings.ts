@@ -5,6 +5,13 @@ export default defineType({
   title: 'Site Settings',
   type: 'document',
   __experimental_actions: ['update', 'publish'],
+  initialValue: {
+    businessName: 'Luxe Glow Spray Tans',
+    phone: '(828) 429-4759',
+    email: 'miss.ruh07@gmail.com',
+    address: '119 N Street, Rutherfordton, NC',
+    serviceAreas: ['Rutherfordton', 'Spindale', 'Forest City', 'Lake Lure', 'Tryon', 'Morganton'],
+  },
   fields: [
     defineField({
       name: 'businessName',

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,16 +7,16 @@
 /* ─── Design Tokens ─────────────────────────────────────────── */
 :root {
   /* Colors */
-  --color-primary: #0f172a;
-  --color-accent: #2563eb;
-  --color-bg: #ffffff;
-  --color-surface: #f8fafc;
-  --color-text: #0f172a;
-  --color-muted: #64748b;
+  --color-primary: #C9A84C;
+  --color-accent: #E8C97A;
+  --color-bg: #0A0A0A;
+  --color-surface: #161616;
+  --color-text: #F5F0E8;
+  --color-muted: #A89880;
 
   /* Typography */
-  --font-display: 'Inter', system-ui, sans-serif;
-  --font-body: 'Inter', system-ui, sans-serif;
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'Jost', sans-serif;
 
   /* Spacing scale */
   --space-xs: 0.25rem;   /* 4px */
@@ -25,10 +27,14 @@
   --space-2xl: 3rem;     /* 48px */
   --space-3xl: 5rem;     /* 80px */
 
-  /* Border radius — sharp by default, override per project */
-  --radius-sm: 2px;
-  --radius-md: 4px;
-  --radius-lg: 6px;
+  /* Border radius — 0px sharp corners throughout */
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius: 0px;
+
+  /* Transition */
+  --transition: 0.2s ease;
 }
 
 /* ─── Base ───────────────────────────────────────────────────── */
@@ -53,21 +59,58 @@
     margin: 0;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1 {
+    font-family: var(--font-display);
+    line-height: 1.2;
+    font-weight: 700;
+    font-size: clamp(1rem, 9vw, 5rem);
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    line-height: 1.2;
+    font-weight: 700;
+    font-size: clamp(0.875rem, 8vw, 3rem);
+  }
+
+  h3 {
+    font-family: var(--font-display);
+    line-height: 1.2;
+    font-weight: 700;
+    font-size: clamp(0.75rem, 6vw, 2rem);
+  }
+
+  h4, h5, h6 {
     font-family: var(--font-display);
     line-height: 1.2;
     font-weight: 700;
   }
 
+  p {
+    font-size: clamp(0.5rem, 4vw, 1rem);
+  }
+
   a {
-    color: inherit;
+    color: var(--color-primary);
     text-decoration: none;
+    transition: color var(--transition);
+  }
+
+  a:hover {
+    color: var(--color-accent);
   }
 
   img, video {
     max-width: 100%;
     height: auto;
     display: block;
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    border-radius: 0px;
   }
 }
 
@@ -84,5 +127,64 @@
     .container-site {
       padding-inline: var(--space-xl);
     }
+  }
+}
+
+/* ─── Components ─────────────────────────────────────────────── */
+@layer components {
+  .btn-primary {
+    background: linear-gradient(135deg, #8B6914, #C9A84C, #E8C97A);
+    color: var(--color-bg);
+    padding: 16px 40px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 600;
+    border: none;
+    border-radius: 0px;
+    cursor: pointer;
+    transition: opacity var(--transition);
+    display: inline-block;
+  }
+
+  .btn-primary:hover {
+    opacity: 0.88;
+    color: var(--color-bg);
+  }
+
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--color-primary);
+    color: var(--color-text);
+    padding: 16px 40px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+    border-radius: 0px;
+    cursor: pointer;
+    transition: border-color var(--transition), color var(--transition);
+    display: inline-block;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  .gold-line {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--color-primary), transparent);
+  }
+
+  .section {
+    padding: 100px 5%;
+  }
+
+  .section-inner {
+    max-width: 1200px;
+    margin: 0 auto;
   }
 }
