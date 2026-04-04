@@ -8,7 +8,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "sanity": "sanity"
+    "studio": "cd studio && npm run dev",
+    "studio:deploy": "cd studio && npm run deploy"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.2.1",
@@ -16,7 +17,7 @@
     "@astrojs/vercel": "^8.0.0",
     "@sanity/client": "^6.22.5",
     "@sanity/image-url": "^1.0.2",
-    "astro": "^4.16.18",
+    "astro": "^5.0.0",
     "sanity": "^3.65.0",
     "tailwindcss": "^3.4.14"
   },
