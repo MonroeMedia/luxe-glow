@@ -1,0 +1,28 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { getPageBySlug } from '@lib/queries';
+
+const page = await getPageBySlug('home');
+---
+
+<BaseLayout
+  title={page?.seo?.metaTitle ?? page?.title}
+  description={page?.seo?.metaDescription}
+  seo={page?.seo}
+>
+  <section class="hero container-site">
+    <h1>{page?.title ?? 'Welcome'}</h1>
+    <p>Add your sections here via Sanity page builder.</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-block: var(--space-3xl);
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin-bottom: var(--space-md);
+  }
+</style>

@@ -1,0 +1,149 @@
+---
+import type { SiteSettings } from '@lib/queries';
+
+interface Props {
+  settings?: SiteSettings | null;
+}
+
+const { settings } = Astro.props;
+const year = new Date().getFullYear();
+const businessName = settings?.businessName ?? 'Monroe Media';
+---
+
+<footer class="site-footer">
+  <div class="container-site footer-inner">
+    <div class="footer-brand">
+      <p class="footer-name">{businessName}</p>
+      {settings?.address && (
+        <p class="footer-address">{settings.address}</p>
+      )}
+      {settings?.phone && (
+        <a href={`tel:${settings.phone.replace(/\D/g, '')}`} class="footer-contact">
+          {settings.phone}
+        </a>
+      )}
+      {settings?.email && (
+        <a href={`mailto:${settings.email}`} class="footer-contact">
+          {settings.email}
+        </a>
+      )}
+    </div>
+
+    {settings?.serviceAreas && settings.serviceAreas.length > 0 && (
+      <div class="footer-areas">
+        <p class="footer-label">Service Areas</p>
+        <p>{settings.serviceAreas.join(' · ')}</p>
+      </div>
+    )}
+
+    {settings?.social && (
+      <div class="footer-social">
+        {settings.social.facebook && (
+          <a href={settings.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook">FB</a>
+        )}
+        {settings.social.instagram && (
+          <a href={settings.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram">IG</a>
+        )}
+        {settings.social.linkedin && (
+          <a href={settings.social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">LI</a>
+        )}
+      </div>
+    )}
+  </div>
+
+  <div class="footer-legal">
+    <div class="container-site">
+      <p>&copy; {year} {businessName}. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: var(--color-primary);
+    color: #e2e8f0;
+    margin-top: auto;
+  }
+
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+    padding-block: var(--space-2xl);
+  }
+
+  @media (min-width: 768px) {
+    .footer-inner {
+      grid-template-columns: 1fr 1fr auto;
+      align-items: start;
+    }
+  }
+
+  .footer-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: #fff;
+    margin: 0 0 var(--space-sm);
+  }
+
+  .footer-address {
+    font-size: 0.875rem;
+    color: #94a3b8;
+    margin: 0 0 var(--space-xs);
+  }
+
+  .footer-contact {
+    display: block;
+    font-size: 0.875rem;
+    color: #94a3b8;
+    margin-bottom: var(--space-xs);
+    transition: color 0.15s;
+  }
+
+  .footer-contact:hover {
+    color: #fff;
+  }
+
+  .footer-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #94a3b8;
+    margin: 0 0 var(--space-sm);
+  }
+
+  .footer-areas p {
+    font-size: 0.875rem;
+    color: #cbd5e1;
+    margin: 0;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: var(--space-md);
+  }
+
+  .footer-social a {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #94a3b8;
+    transition: color 0.15s;
+  }
+
+  .footer-social a:hover {
+    color: #fff;
+  }
+
+  .footer-legal {
+    border-top: 1px solid #1e293b;
+    padding-block: var(--space-md);
+  }
+
+  .footer-legal p {
+    font-size: 0.8125rem;
+    color: #64748b;
+    margin: 0;
+  }
+</style>

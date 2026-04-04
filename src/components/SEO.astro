@@ -1,0 +1,72 @@
+---
+import type { SEOFields, SiteSettings } from '@lib/queries';
+
+interface Props {
+  seo?: SEOFields;
+  title?: string;
+  description?: string;
+  settings?: SiteSettings | null;
+  canonicalUrl?: string;
+}
+
+const {
+  seo,
+  title: propTitle,
+  description: propDescription,
+  settings,
+  canonicalUrl,
+} = Astro.props;
+
+const siteName = settings?.businessName ?? 'Monroe Media';
+const siteUrl = import.meta.env.PUBLIC_SITE_URL ?? Astro.url.origin;
+
+const metaTitle = seo?.metaTitle ?? propTitle ?? siteName;
+const metaDescription = seo?.metaDescription ?? propDescription ?? '';
+const ogImageUrl = seo?.ogImage?.asset?.url ?? null;
+const noIndex = seo?.noIndex ?? false;
+const canonical = canonicalUrl ?? Astro.url.href;
+
+// Resolve schema markup — either a raw JSON string from Sanity or null
+let schemaJson: string | null = null;
+if (seo?.schemaMarkup) {
+  try {
+    // Validate it's valid JSON before injecting
+    JSON.parse(seo.schemaMarkup);
+    schemaJson = seo.schemaMarkup;
+  } catch {
+    // Skip invalid schema
+  }
+}
+---
+
+<!-- Primary meta -->
+<title>{metaTitle}</title>
+<meta name="description" content={metaDescription} />
+<link rel="canonical" href={canonical} />
+{noIndex && <meta name="robots" content="noindex, nofollow" />}
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:title" content={metaTitle} />
+<meta property="og:description" content={metaDescription} />
+<meta property="og:url" content={canonical} />
+{ogImageUrl && (
+  <>
+    <meta property="og:image" content={ogImageUrl} />
+    {seo?.ogImage?.alt && (
+      <meta property="og:image:alt" content={seo.ogImage.alt} />
+    )}
+  </>
+)}
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content={ogImageUrl ? 'summary_large_image' : 'summary'} />
+<meta name="twitter:title" content={metaTitle} />
+<meta name="twitter:description" content={metaDescription} />
+{ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
+
+<!-- JSON-LD Schema -->
+{schemaJson && (
+  <script type="application/ld+json" set:html={schemaJson} />
+)}

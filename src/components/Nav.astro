@@ -1,0 +1,146 @@
+---
+import type { SiteSettings } from '@lib/queries';
+
+interface Props {
+  settings?: SiteSettings | null;
+}
+
+const { settings } = Astro.props;
+const businessName = settings?.businessName ?? 'Monroe Media';
+const phone = settings?.phone;
+---
+
+<header class="site-header">
+  <nav class="container-site" aria-label="Main navigation">
+    <a href="/" class="site-logo">{businessName}</a>
+
+    <button
+      class="nav-toggle"
+      aria-expanded="false"
+      aria-controls="nav-menu"
+      aria-label="Toggle navigation"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <ul id="nav-menu" class="nav-links" role="list">
+      <li><a href="/">Home</a></li>
+      <li><a href="/services">Services</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+
+    {phone && (
+      <a href={`tel:${phone.replace(/\D/g, '')}`} class="nav-cta">
+        {phone}
+      </a>
+    )}
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--color-bg);
+    border-bottom: 1px solid var(--color-surface);
+  }
+
+  .site-header nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    padding-block: var(--space-md);
+  }
+
+  .site-logo {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-right: auto;
+  }
+
+  .nav-links {
+    display: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: var(--space-lg);
+  }
+
+  .nav-links a {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-text);
+    transition: color 0.15s;
+  }
+
+  .nav-links a:hover {
+    color: var(--color-accent);
+  }
+
+  .nav-cta {
+    display: none;
+    padding: var(--space-sm) var(--space-md);
+    background-color: var(--color-accent);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    border-radius: var(--radius-md);
+    white-space: nowrap;
+    transition: opacity 0.15s;
+  }
+
+  .nav-cta:hover {
+    opacity: 0.9;
+  }
+
+  .nav-toggle {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--space-sm);
+  }
+
+  .nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background-color: var(--color-text);
+    transition: transform 0.2s;
+  }
+
+  @media (min-width: 768px) {
+    .nav-links {
+      display: flex;
+    }
+
+    .nav-cta {
+      display: inline-flex;
+    }
+
+    .nav-toggle {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector('.nav-toggle') as HTMLButtonElement;
+  const menu = document.getElementById('nav-menu') as HTMLUListElement;
+
+  if (toggle && menu) {
+    toggle.addEventListener('click', () => {
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!expanded));
+      menu.style.display = expanded ? '' : 'flex';
+      menu.style.flexDirection = expanded ? '' : 'column';
+    });
+  }
+</script>

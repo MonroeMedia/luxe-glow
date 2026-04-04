@@ -1,0 +1,37 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { getAllPages, getPageBySlug } from '@lib/queries';
+
+export async function getStaticPaths() {
+  const pages = await getAllPages();
+  return pages
+    .filter((p) => p.slug.current !== 'home')
+    .map((p) => ({
+      params: { slug: p.slug.current },
+    }));
+}
+
+const { slug } = Astro.params;
+const page = await getPageBySlug(slug!);
+
+if (!page) {
+  return Astro.redirect('/404');
+}
+---
+
+<BaseLayout
+  title={page.seo?.metaTitle ?? page.title}
+  description={page.seo?.metaDescription}
+  seo={page.seo}
+>
+  <div class="page-content container-site">
+    <h1>{page.title}</h1>
+    <!-- Render page sections here based on page.sections -->
+  </div>
+</BaseLayout>
+
+<style>
+  .page-content {
+    padding-block: var(--space-2xl);
+  }
+</style>
