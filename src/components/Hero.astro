@@ -1,0 +1,223 @@
+---
+interface Props {}
+---
+
+<section id="home" class="hero">
+  <!-- Background layers -->
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="hero-glow" aria-hidden="true"></div>
+
+  <!-- Content -->
+  <div class="hero-content">
+
+    <!-- 1. Eyebrow -->
+    <p class="eyebrow">Rutherfordton's Premier Spray Tan Studio</p>
+
+    <!-- 2. H1 -->
+    <h1>
+      Spray Tans in<br />
+      <em>Rutherfordton</em>
+    </h1>
+
+    <!-- 3. Subtext -->
+    <p class="subtext">
+      Offering spray tans and mobile spray tans in Rutherfordton and
+      surrounding areas&nbsp;— flawless, streak-free color that never
+      pulls orange.
+    </p>
+
+    <!-- 4. CTA buttons -->
+    <div class="cta-row">
+      <a href="/#contact" class="btn-primary">Book a Session</a>
+      <a href="/#prep" class="btn-outline">See How It Works</a>
+    </div>
+
+    <!-- 5. Phone line -->
+    <p class="phone-line">
+      Call or text us at&nbsp;
+      <a href="tel:8284294759">(828) 429-4759</a>
+    </p>
+
+  </div>
+
+  <!-- 6. Scroll indicator -->
+  <div class="scroll-indicator" aria-hidden="true">
+    <span class="scroll-line"></span>
+    <span class="scroll-label">Scroll</span>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    background: var(--color-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 120px 5% 100px;
+  }
+
+  /* Grid texture */
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(201, 168, 76, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201, 168, 76, 0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  /* Radial glow */
+  .hero-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(201, 168, 76, 0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* Content wrapper */
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 820px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* 1. Eyebrow */
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-family: var(--font-body);
+    font-size: 11px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    margin: 0 0 28px;
+  }
+
+  .eyebrow::before,
+  .eyebrow::after {
+    content: '';
+    flex: 1;
+    max-width: 48px;
+    height: 1px;
+    background: var(--color-primary);
+    opacity: 0.6;
+  }
+
+  /* 2. H1 */
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(42px, 6vw, 76px);
+    line-height: 1.1;
+    letter-spacing: -1px;
+    color: var(--color-text);
+    margin: 0 0 24px;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--color-primary);
+  }
+
+  /* 3. Subtext */
+  .subtext {
+    font-family: var(--font-body);
+    font-size: 17px;
+    color: var(--color-muted);
+    max-width: 520px;
+    text-align: center;
+    font-weight: 300;
+    line-height: 1.7;
+    margin: 0 0 44px;
+  }
+
+  /* 4. CTA row */
+  .cta-row {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* 5. Phone line */
+  .phone-line {
+    font-family: var(--font-body);
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--color-muted);
+    margin: 48px 0 0;
+  }
+
+  .phone-line a {
+    color: var(--color-primary);
+    transition: color var(--transition);
+  }
+
+  .phone-line a:hover {
+    color: var(--color-accent);
+  }
+
+  /* 6. Scroll indicator */
+  .scroll-indicator {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    translate: -50% 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .scroll-line {
+    display: block;
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--color-primary), transparent);
+  }
+
+  .scroll-label {
+    font-family: var(--font-body);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  /* Mobile */
+  @media (max-width: 600px) {
+    .hero {
+      padding: 100px 5% 80px;
+    }
+
+    .cta-row {
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .cta-row .btn-primary,
+    .cta-row .btn-outline {
+      width: 100%;
+      text-align: center;
+    }
+
+    .eyebrow {
+      font-size: 10px;
+      letter-spacing: 3px;
+    }
+  }
+</style>
