@@ -54,3 +54,20 @@ const settings = Astro.props.settings ?? await getSiteSettings();
     </slot>
   </body>
 </html>
+
+<script>
+  // Scroll-reveal: observe all [data-reveal] elements
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.08 }
+  );
+
+  document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
+</script>
