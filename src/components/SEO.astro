@@ -17,12 +17,13 @@ const {
   canonicalUrl,
 } = Astro.props;
 
-const siteName = settings?.businessName ?? 'Monroe Media';
+const siteName = settings?.businessName ?? 'Luxe Glow Spray Tans';
 const siteUrl = import.meta.env.PUBLIC_SITE_URL ?? Astro.url.origin;
 
 const metaTitle = seo?.metaTitle ?? propTitle ?? siteName;
 const metaDescription = seo?.metaDescription ?? propDescription ?? '';
-const ogImageUrl = seo?.ogImage?.asset?.url ?? null;
+const ogImageUrl = seo?.ogImage?.asset?.url ?? `${siteUrl}/og-image.png`;
+const ogImageAlt = seo?.ogImage?.alt ?? 'Luxe Glow Spray Tans — Rutherfordton, NC';
 const noIndex = seo?.noIndex ?? false;
 const canonical = canonicalUrl ?? Astro.url.href;
 
@@ -30,7 +31,6 @@ const canonical = canonicalUrl ?? Astro.url.href;
 let schemaJson: string | null = null;
 if (seo?.schemaMarkup) {
   try {
-    // Validate it's valid JSON before injecting
     JSON.parse(seo.schemaMarkup);
     schemaJson = seo.schemaMarkup;
   } catch {
@@ -43,28 +43,26 @@ if (seo?.schemaMarkup) {
 <title>{metaTitle}</title>
 <meta name="description" content={metaDescription} />
 <link rel="canonical" href={canonical} />
-{noIndex && <meta name="robots" content="noindex, nofollow" />}
+<meta name="robots" content={noIndex ? 'noindex, nofollow' : 'index, follow'} />
 
 <!-- Open Graph -->
 <meta property="og:type" content="website" />
+<meta property="og:locale" content="en_US" />
 <meta property="og:site_name" content={siteName} />
 <meta property="og:title" content={metaTitle} />
 <meta property="og:description" content={metaDescription} />
 <meta property="og:url" content={canonical} />
-{ogImageUrl && (
-  <>
-    <meta property="og:image" content={ogImageUrl} />
-    {seo?.ogImage?.alt && (
-      <meta property="og:image:alt" content={seo.ogImage.alt} />
-    )}
-  </>
-)}
+<meta property="og:image" content={ogImageUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={ogImageAlt} />
 
 <!-- Twitter Card -->
-<meta name="twitter:card" content={ogImageUrl ? 'summary_large_image' : 'summary'} />
+<meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={metaTitle} />
 <meta name="twitter:description" content={metaDescription} />
-{ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
+<meta name="twitter:image" content={ogImageUrl} />
+<meta name="twitter:image:alt" content={ogImageAlt} />
 
 <!-- JSON-LD Schema -->
 {schemaJson && (

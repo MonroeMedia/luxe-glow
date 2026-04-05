@@ -36,6 +36,30 @@ const settings = Astro.props.settings ?? await getSiteSettings();
     <slot name="seo">
       <SEO {seo} {title} {description} {settings} />
     </slot>
+
+    <!-- LocalBusiness structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Luxe Glow Spray Tans",
+      "url": "https://luxeglowtanning.com/",
+      "telephone": "+18284294759",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Rutherfordton",
+        "addressRegion": "NC",
+        "addressCountry": "US"
+      },
+      "areaServed": [
+        "Rutherfordton", "Spindale", "Forest City",
+        "Lake Lure", "Tryon", "Morganton"
+      ],
+      "priceRange": "$$",
+      "image": "https://luxeglowtanning.com/og-image.png",
+      "description": "Premium spray tans and mobile spray tan services in Rutherfordton, NC. Flawless, natural-looking color for every skin tone."
+    }
+    </script>
   </head>
 
   <body>

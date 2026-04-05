@@ -23,11 +23,11 @@ const cards = [1, 2, 3];
 
     <!-- Grid -->
     <div class="gallery-grid">
-      {cards.map(() => (
-        <div class="gallery-card">
+      {cards.map((_, i) => (
+        <div class="gallery-card" role="img" aria-label={`Before and after spray tan result — client ${i + 1}`}>
           <div class="card-sheen" aria-hidden="true"></div>
-          <span class="card-placeholder">Client Photo</span>
-          <div class="card-tags">
+          <span class="card-placeholder" aria-hidden="true">Client Photo</span>
+          <div class="card-tags" aria-hidden="true">
             <span class="tag tag-before">Before</span>
             <span class="tag tag-after">After</span>
           </div>

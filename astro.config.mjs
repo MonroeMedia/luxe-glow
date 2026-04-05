@@ -5,7 +5,7 @@ import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://luxeglowtanning.com',
+  site: 'https://luxeglowtanning.com/',
   output: 'static',
   adapter: vercel(),
   integrations: [
