@@ -1,0 +1,205 @@
+---
+interface Props {}
+
+const cards = [
+  {
+    num: '01',
+    title: 'Shave',
+    body: 'Shave at least 24 hours prior to your appointment. Shaving immediately before can open pores and cause the solution to appear patchy or uneven. Giving your skin time to settle ensures a smooth, even canvas.',
+  },
+  {
+    num: '02',
+    title: 'Exfoliate',
+    body: 'Use a gentle body scrub or exfoliating mitt to remove dead skin cells — paying extra attention to rough areas like elbows, knees, and ankles. This step is the single biggest factor in how evenly your tan develops and how long it lasts.',
+  },
+  {
+    num: '03',
+    title: 'Moisturize',
+    body: 'After exfoliating, apply a lightweight oil-free moisturizer to any dry or rough patches. Hydrated skin absorbs the solution more evenly. Do this the night before — not day-of — so no residue interferes with your tan.',
+  },
+];
+---
+
+<section id="prep" class="prep-section">
+  <div class="prep-inner">
+
+    <!-- Header -->
+    <div class="prep-header">
+      <p class="eyebrow">
+        <span class="eyebrow-line" aria-hidden="true"></span>
+        Preparation
+      </p>
+      <h2>Before Your Appointment</h2>
+      <p class="subtext">
+        The secret to a flawless, long-lasting tan starts at least 24 hours
+        before you walk in. Follow these three steps and your results will
+        speak for themselves.
+      </p>
+    </div>
+
+    <!-- Cards -->
+    <div class="cards-grid">
+      {cards.map(({ num, title, body }) => (
+        <div class="card">
+          <span class="card-num" aria-hidden="true">{num}</span>
+          <h3 class="card-title">{title}</h3>
+          <p class="card-body">{body}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Callout note -->
+    <aside class="callout">
+      <p>
+        <strong>Important:</strong> All three of these steps should be completed
+        at least 24 hours before your appointment — not the morning of.
+        Day-of barriers on the skin affect how the solution adheres.
+      </p>
+    </aside>
+
+  </div>
+</section>
+
+<style>
+  .prep-section {
+    background: #111111;
+    padding: 100px 5%;
+  }
+
+  .prep-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Header */
+  .prep-header {
+    margin-bottom: 60px;
+  }
+
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-body);
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    margin: 0 0 20px;
+  }
+
+  .eyebrow-line {
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(30px, 4vw, 48px);
+    color: var(--color-text);
+    margin: 0 0 18px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .subtext {
+    font-family: var(--font-body);
+    font-size: 16px;
+    color: var(--color-muted);
+    max-width: 560px;
+    font-weight: 300;
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  /* Grid */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  /* Card */
+  .card {
+    position: relative;
+    background: var(--color-surface);
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    padding: 48px 36px;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--color-primary), transparent);
+  }
+
+  .card-num {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 52px;
+    color: rgba(201, 168, 76, 0.12);
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+
+  .card-title {
+    font-family: var(--font-display);
+    font-size: 18px;
+    color: var(--color-text);
+    letter-spacing: 0.5px;
+    margin: 0 0 12px;
+    font-weight: 700;
+  }
+
+  .card-body {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--color-muted);
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  /* Callout */
+  .callout {
+    border-left: 3px solid var(--color-primary);
+    background: rgba(201, 168, 76, 0.04);
+    padding: 24px 32px;
+    margin-top: 40px;
+  }
+
+  .callout p {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--color-muted);
+    font-style: italic;
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  .callout strong {
+    color: var(--color-primary);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  /* Tablet */
+  @media (max-width: 900px) {
+    .cards-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 600px) {
+    .cards-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
