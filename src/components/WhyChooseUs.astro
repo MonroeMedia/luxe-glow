@@ -1,0 +1,232 @@
+---
+interface Props {}
+
+const cards = [
+  {
+    title: 'We Come to You',
+    body: 'Our mobile spray tan service brings the studio experience directly to your home. No driving, no waiting, no rushing. Book a session on your schedule in your space.',
+  },
+  {
+    title: 'Expert Eye for Tone',
+    body: 'Not all tans are created equal. We assess your natural skin tone, undertones, and desired depth before ever picking up the spray gun — so your result looks like you just got back from vacation, not a costume.',
+  },
+  {
+    title: 'A Comfortable Experience',
+    body: 'We know spray tanning can feel vulnerable. Luxe Glow is built on professionalism and a welcoming presence. First-timers and regulars alike leave feeling confident, not awkward.',
+  },
+];
+---
+
+<section id="why" class="why-section">
+  <div class="why-inner">
+
+    <!-- Header -->
+    <div class="why-header">
+      <p class="eyebrow">
+        <span class="eyebrow-line" aria-hidden="true"></span>
+        Why Luxe Glow
+      </p>
+      <h2>The Difference Is in the Details</h2>
+      <p class="subtext">
+        We take spray tanning seriously. From the formula we use to the way
+        we move through your appointment, every detail is designed to give
+        you a result you are proud to show off.
+      </p>
+    </div>
+
+    <!-- Feature cards -->
+    <div class="cards-grid">
+      {cards.map(({ title, body }) => (
+        <div class="card">
+          <span class="card-icon" aria-hidden="true">✦</span>
+          <h3 class="card-heading">{title}</h3>
+          <p class="card-body">{body}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Standout callout -->
+    <div class="callout">
+      <div class="callout-badge">Our Promise</div>
+      <div class="callout-text">
+        <h3 class="callout-heading">Our Formulas Will Never Pull Orange</h3>
+        <p class="callout-body">
+          The orange tan era is over. Every solution we use is carefully
+          selected for its ability to develop into a rich warm bronze across
+          all skin tones — never brassy, never artificial. If you have been
+          burned by an orange tan before, this is your sign to try again.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .why-section {
+    background: #0A0A0A;
+    padding: 100px 5%;
+  }
+
+  .why-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Header */
+  .why-header {
+    margin-bottom: 60px;
+  }
+
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-body);
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    margin: 0 0 20px;
+  }
+
+  .eyebrow-line {
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(30px, 4vw, 48px);
+    color: var(--color-text);
+    margin: 0 0 18px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .subtext {
+    font-family: var(--font-body);
+    font-size: 16px;
+    color: var(--color-muted);
+    max-width: 560px;
+    font-weight: 300;
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  /* Feature cards */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-bottom: 2px;
+  }
+
+  .card {
+    background: #161616;
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    padding: 44px 36px;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+
+  .card:hover {
+    border-color: var(--color-primary);
+    background: rgba(201, 168, 76, 0.04);
+  }
+
+  .card-icon {
+    display: block;
+    font-size: 24px;
+    color: var(--color-primary);
+    margin-bottom: 24px;
+    line-height: 1;
+  }
+
+  .card-heading {
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--color-text);
+    margin: 0 0 12px;
+  }
+
+  .card-body {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--color-muted);
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  /* Callout */
+  .callout {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #4A2E1A 0%, #1a0e06 100%);
+    border: 1px solid var(--color-primary);
+    padding: 48px 44px;
+    display: flex;
+    align-items: center;
+    gap: 48px;
+  }
+
+  .callout::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(to bottom, transparent, var(--color-primary), transparent);
+  }
+
+  .callout-badge {
+    background: rgba(201, 168, 76, 0.12);
+    border: 1px solid var(--color-primary);
+    padding: 12px 20px;
+    font-family: var(--font-body);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--color-primary);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .callout-heading {
+    font-family: var(--font-display);
+    font-size: 26px;
+    color: var(--color-text);
+    margin: 0 0 12px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .callout-body {
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--color-muted);
+    max-width: 560px;
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .cards-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .callout {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 24px;
+      padding: 36px 28px;
+    }
+  }
+</style>
