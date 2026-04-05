@@ -1,0 +1,94 @@
+---
+interface Props {}
+
+const cities = [
+  'Rutherfordton',
+  'Spindale',
+  'Forest City',
+  'Lake Lure',
+  'Tryon',
+  'Morganton',
+];
+---
+
+<section id="areas" class="area-strip">
+  <div class="area-inner">
+    <span class="area-label">Service Areas</span>
+    <div class="area-cities">
+      {cities.map((city, i) => (
+        <>
+          <span class="city">{city}</span>
+          {i < cities.length - 1 && (
+            <span class="sep" aria-hidden="true">◆</span>
+          )}
+        </>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .area-strip {
+    width: 100%;
+    background: #111111;
+    border-top: 1px solid rgba(201, 168, 76, 0.3);
+    border-bottom: 1px solid rgba(201, 168, 76, 0.3);
+    padding: 24px 5%;
+  }
+
+  .area-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .area-label {
+    font-family: var(--font-body);
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    font-weight: 500;
+    margin-right: 16px;
+    white-space: nowrap;
+  }
+
+  .area-cities {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0;
+    justify-content: center;
+  }
+
+  .city {
+    font-family: var(--font-body);
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: var(--color-muted);
+    white-space: nowrap;
+  }
+
+  .sep {
+    color: rgba(201, 168, 76, 0.6);
+    font-size: 8px;
+    margin: 0 8px;
+    line-height: 1;
+  }
+
+  @media (max-width: 480px) {
+    .area-inner {
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .area-label {
+      margin-right: 0;
+    }
+  }
+</style>

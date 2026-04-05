@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Hero from '@components/Hero.astro';
+import ServiceAreaStrip from '@components/ServiceAreaStrip.astro';
 import { getPageBySlug } from '@lib/queries';
 
 const page = await getPageBySlug('home');
@@ -12,4 +13,5 @@ const page = await getPageBySlug('home');
   seo={page?.seo}
 >
   <Hero />
+  <ServiceAreaStrip />
 </BaseLayout>
