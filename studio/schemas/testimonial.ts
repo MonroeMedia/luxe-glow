@@ -41,6 +41,12 @@ export default defineType({
       rows: 4,
       validation: (Rule) => Rule.required(),
     }),
+    defineField({
+      name: 'displayOrder',
+      title: 'Display Order',
+      type: 'number',
+      description: 'Lower numbers appear first',
+    }),
   ],
   preview: {
     select: {

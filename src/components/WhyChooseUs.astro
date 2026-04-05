@@ -1,40 +1,52 @@
 ---
-interface Props {}
+import type { WhyChooseUsBlock } from '@lib/queries';
 
-const cards = [
+interface Props {
+  block?: WhyChooseUsBlock | null;
+}
+
+const { block } = Astro.props;
+
+const eyebrow       = block?.eyebrow       ?? 'Why Luxe Glow';
+const heading       = block?.heading       ?? 'The Difference Is in the Details';
+const subtext       = block?.subtext       ?? 'We take spray tanning seriously. From the formula we use to the way we move through your appointment, every detail is designed to give you a result you are proud to show off.';
+const calloutBadge  = block?.calloutBadge  ?? 'Our Promise';
+const calloutHeading = block?.calloutHeading ?? 'Our Formulas Will Never Pull Orange';
+const calloutBody   = block?.calloutBody   ?? 'The orange tan era is over. Every solution we use is carefully selected for its ability to develop into a rich warm bronze across all skin tones — never brassy, never artificial. If you have been burned by an orange tan before, this is your sign to try again.';
+
+const defaultCards = [
   {
+    _key: 'mobile',
     title: 'We Come to You',
     body: 'Our mobile spray tan service brings the studio experience directly to your home. No driving, no waiting, no rushing. Book a session on your schedule in your space.',
   },
   {
+    _key: 'tone',
     title: 'Expert Eye for Tone',
     body: 'Not all tans are created equal. We assess your natural skin tone, undertones, and desired depth before ever picking up the spray gun — so your result looks like you just got back from vacation, not a costume.',
   },
   {
+    _key: 'comfort',
     title: 'A Comfortable Experience',
     body: 'We know spray tanning can feel vulnerable. Luxe Glow is built on professionalism and a welcoming presence. First-timers and regulars alike leave feeling confident, not awkward.',
   },
 ];
+
+const cards = block?.cards?.length ? block.cards : defaultCards;
 ---
 
 <section id="why" class="why-section">
   <div class="why-inner" data-reveal>
 
-    <!-- Header -->
     <div class="why-header">
       <p class="eyebrow">
         <span class="eyebrow-line" aria-hidden="true"></span>
-        Why Luxe Glow
+        {eyebrow}
       </p>
-      <h2>The Difference Is in the Details</h2>
-      <p class="subtext">
-        We take spray tanning seriously. From the formula we use to the way
-        we move through your appointment, every detail is designed to give
-        you a result you are proud to show off.
-      </p>
+      <h2>{heading}</h2>
+      <p class="subtext">{subtext}</p>
     </div>
 
-    <!-- Feature cards -->
     <div class="cards-grid">
       {cards.map(({ title, body }) => (
         <div class="card">
@@ -45,17 +57,11 @@ const cards = [
       ))}
     </div>
 
-    <!-- Standout callout -->
     <div class="callout">
-      <div class="callout-badge">Our Promise</div>
+      <div class="callout-badge">{calloutBadge}</div>
       <div class="callout-text">
-        <h3 class="callout-heading">Our Formulas Will Never Pull Orange</h3>
-        <p class="callout-body">
-          The orange tan era is over. Every solution we use is carefully
-          selected for its ability to develop into a rich warm bronze across
-          all skin tones — never brassy, never artificial. If you have been
-          burned by an orange tan before, this is your sign to try again.
-        </p>
+        <h3 class="callout-heading">{calloutHeading}</h3>
+        <p class="callout-body">{calloutBody}</p>
       </div>
     </div>
 
@@ -73,7 +79,6 @@ const cards = [
     margin: 0 auto;
   }
 
-  /* Header */
   .why-header {
     margin-bottom: 60px;
   }
@@ -117,7 +122,6 @@ const cards = [
     margin: 0;
   }
 
-  /* Feature cards */
   .cards-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -169,7 +173,6 @@ const cards = [
     margin: 0;
   }
 
-  /* Callout */
   .callout {
     position: relative;
     overflow: hidden;
@@ -223,11 +226,8 @@ const cards = [
     margin: 0;
   }
 
-  /* Responsive */
   @media (max-width: 900px) {
-    .cards-grid {
-      grid-template-columns: 1fr;
-    }
+    .cards-grid { grid-template-columns: 1fr; }
 
     .callout {
       flex-direction: column;

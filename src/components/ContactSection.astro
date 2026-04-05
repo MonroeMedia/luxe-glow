@@ -1,15 +1,34 @@
 ---
-interface Props {}
+import type { ContactBlock, SiteSettings } from '@lib/queries';
 
-const areas = [
-  'Rutherfordton',
-  'Spindale',
-  'Forest City',
-  'Lake Lure',
-  'Tryon',
-  'Morganton',
-  'Other',
-];
+interface Props {
+  block?: ContactBlock | null;
+  settings?: SiteSettings | null;
+}
+
+const { block, settings } = Astro.props;
+
+const eyebrow     = block?.eyebrow     ?? 'Book a Session';
+const heading     = block?.heading     ?? 'Ready to Glow?\nLet\'s Make It Happen.';
+const subtext     = block?.subtext     ?? 'Fill out the form and we will reach out to confirm your appointment. Prefer to skip the form? Call or text us directly — we are happy to book you that way too.';
+const formHeading = block?.formHeading ?? 'Book a Session';
+const formSubtext = block?.formSubtext ?? 'We will confirm your appointment within 24 hours.';
+const submitLabel = block?.submitLabel ?? 'Request Appointment';
+
+const phone       = settings?.phone ?? '(828) 429-4759';
+const phoneRaw    = phone.replace(/\D/g, '');
+const city        = settings?.city ?? 'Rutherfordton';
+const state       = settings?.state ?? 'NC';
+const serviceAreas = settings?.serviceAreas?.length
+  ? settings.serviceAreas
+  : ['Rutherfordton', 'Spindale', 'Forest City', 'Lake Lure', 'Tryon', 'Morganton'];
+const instagramUrl = settings?.social?.instagram ?? '#';
+const facebookUrl  = settings?.social?.facebook ?? '#';
+
+// Heading may contain a newline for the two-line layout
+const [headingLine1, headingLine2] = heading.split('\n');
+
+const areas = [...serviceAreas, 'Other'];
 ---
 
 <section id="contact" class="contact-section">
@@ -21,80 +40,55 @@ const areas = [
     <div class="contact-info">
       <p class="eyebrow">
         <span class="eyebrow-line" aria-hidden="true"></span>
-        Book a Session
+        {eyebrow}
       </p>
-      <h2>Ready to Glow?<br />Let's Make It Happen.</h2>
-      <p class="contact-lead">
-        Fill out the form and we will reach out to confirm your appointment.
-        Prefer to skip the form? Call or text us directly — we are happy to
-        book you that way too.
-      </p>
+      <h2>{headingLine1}{headingLine2 && <><br />{headingLine2}</>}</h2>
+      <p class="contact-lead">{subtext}</p>
 
       <ul class="contact-details" role="list">
         <li class="contact-item">
           <span class="detail-label">Phone / Text</span>
-          <a href="tel:8284294759" class="detail-value">(828) 429-4759</a>
+          <a href={`tel:${phoneRaw}`} class="detail-value">{phone}</a>
         </li>
         <li class="contact-item">
           <span class="detail-label">Location</span>
-          <span class="detail-value">Rutherfordton, NC</span>
+          <span class="detail-value">{city}, {state}</span>
           <span class="detail-sub">Mobile service available throughout the area</span>
         </li>
         <li class="contact-item">
           <span class="detail-label">Service Areas</span>
           <span class="detail-areas">
-            Rutherfordton · Spindale · Forest City · Lake Lure · Tryon · Morganton
+            {serviceAreas.join(' · ')}
           </span>
         </li>
       </ul>
 
       <div class="contact-social">
-        <a href="#" class="social-link">Instagram</a>
-        <a href="#" class="social-link">Facebook</a>
+        <a href={instagramUrl} class="social-link" target={instagramUrl !== '#' ? '_blank' : undefined} rel={instagramUrl !== '#' ? 'noopener noreferrer' : undefined}>Instagram</a>
+        <a href={facebookUrl} class="social-link" target={facebookUrl !== '#' ? '_blank' : undefined} rel={facebookUrl !== '#' ? 'noopener noreferrer' : undefined}>Facebook</a>
       </div>
     </div>
 
     <!-- Right column — form -->
     <div class="form-wrap">
-      <h3 class="form-heading">Book a Session</h3>
-      <p class="form-subtext">We will confirm your appointment within 24 hours.</p>
+      <h3 class="form-heading">{formHeading}</h3>
+      <p class="form-subtext">{formSubtext}</p>
 
       <form id="contact-form" aria-label="Contact form" novalidate>
         <div class="field-row">
           <div class="field">
             <label for="firstName" class="field-label">First Name</label>
-            <input
-              type="text"
-              id="firstName"
-              name="firstName"
-              placeholder="Jane"
-              required
-              class="field-input"
-            />
+            <input type="text" id="firstName" name="firstName" placeholder="Jane" required class="field-input" />
           </div>
           <div class="field">
             <label for="lastName" class="field-label">Last Name</label>
-            <input
-              type="text"
-              id="lastName"
-              name="lastName"
-              placeholder="Doe"
-              required
-              class="field-input"
-            />
+            <input type="text" id="lastName" name="lastName" placeholder="Doe" required class="field-input" />
           </div>
         </div>
 
         <div class="field">
           <label for="phone" class="field-label">Phone Number</label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            placeholder="(828) 000-0000"
-            required
-            class="field-input"
-          />
+          <input type="tel" id="phone" name="phone" placeholder="(828) 000-0000" required class="field-input" />
         </div>
 
         <div class="field">
@@ -109,23 +103,18 @@ const areas = [
 
         <div class="field">
           <label for="message" class="field-label">Message</label>
-          <textarea
-            id="message"
-            name="message"
-            placeholder="Preferred days, times, or any questions..."
-            class="field-input field-textarea"
-          ></textarea>
+          <textarea id="message" name="message" placeholder="Preferred days, times, or any questions..." class="field-input field-textarea"></textarea>
         </div>
 
         <button type="submit" id="submit-btn" class="btn-primary submit-btn">
-          Request Appointment
+          {submitLabel}
         </button>
 
         <div id="form-success" class="form-msg form-success" hidden>
           Thank you! We will be in touch within 24 hours to confirm your appointment.
         </div>
         <div id="form-error" class="form-msg form-error" hidden>
-          Something went wrong. Please call or text us directly at (828) 429-4759.
+          Something went wrong. Please call or text us directly at {phone}.
         </div>
       </form>
     </div>
@@ -158,7 +147,6 @@ const areas = [
     align-items: start;
   }
 
-  /* Eyebrow */
   .eyebrow {
     display: flex;
     align-items: center;
@@ -179,7 +167,6 @@ const areas = [
     flex-shrink: 0;
   }
 
-  /* Heading */
   h2 {
     font-family: var(--font-display);
     font-size: clamp(28px, 3.5vw, 44px);
@@ -197,7 +184,6 @@ const areas = [
     margin: 0 0 40px;
   }
 
-  /* Contact details */
   .contact-details {
     display: flex;
     flex-direction: column;
@@ -254,7 +240,6 @@ const areas = [
     line-height: 1.6;
   }
 
-  /* Social */
   .contact-social {
     display: flex;
     gap: 16px;
@@ -279,7 +264,6 @@ const areas = [
     border-color: var(--color-accent);
   }
 
-  /* Form container */
   .form-wrap {
     position: relative;
     background: #161616;
@@ -312,7 +296,6 @@ const areas = [
     margin: 0 0 36px;
   }
 
-  /* Fields */
   .field-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -364,7 +347,6 @@ const areas = [
     color: rgba(168, 152, 128, 0.5);
   }
 
-  /* Select wrapper with custom arrow */
   .select-wrap {
     position: relative;
   }
@@ -389,14 +371,12 @@ const areas = [
     color: var(--color-text);
   }
 
-  /* Textarea */
   .field-textarea {
     height: 100px;
     resize: none;
     line-height: 1.6;
   }
 
-  /* Submit */
   .submit-btn {
     width: 100%;
     text-align: center;
@@ -404,7 +384,6 @@ const areas = [
     cursor: pointer;
   }
 
-  /* Messages */
   .form-msg {
     font-family: var(--font-body);
     font-size: 14px;
@@ -412,15 +391,9 @@ const areas = [
     line-height: 1.6;
   }
 
-  .form-success {
-    color: var(--color-primary);
-  }
+  .form-success { color: var(--color-primary); }
+  .form-error   { color: #E24B4A; }
 
-  .form-error {
-    color: #E24B4A;
-  }
-
-  /* Responsive */
   @media (max-width: 900px) {
     .contact-inner {
       grid-template-columns: 1fr;
@@ -433,9 +406,7 @@ const areas = [
   }
 
   @media (max-width: 600px) {
-    .field-row {
-      grid-template-columns: 1fr;
-    }
+    .field-row { grid-template-columns: 1fr; }
   }
 </style>
 
@@ -470,7 +441,6 @@ const areas = [
       });
 
       if (res.ok) {
-        // Hide all form fields on success
         Array.from(form.elements).forEach((el) => {
           (el as HTMLElement).style.display = 'none';
         });

@@ -7,7 +7,22 @@ interface Props {
 
 const { settings } = Astro.props;
 
-const year = new Date().getFullYear();
+const year           = new Date().getFullYear();
+const logoText       = settings?.logoText ?? 'LUXE GLOW';
+const phone          = settings?.phone ?? '(828) 429-4759';
+const phoneRaw       = phone.replace(/\D/g, '');
+const instagramUrl   = settings?.social?.instagram ?? '#';
+const facebookUrl    = settings?.social?.facebook ?? '#';
+const serviceAreas   = settings?.serviceAreas?.length
+  ? settings.serviceAreas
+  : ['Rutherfordton', 'Spindale', 'Forest City', 'Lake Lure', 'Tryon', 'Morganton'];
+const copyrightText  = settings?.copyrightText ?? `© ${year} Luxe Glow. All rights reserved.`;
+const city           = settings?.city ?? 'Rutherfordton';
+const state          = settings?.state ?? 'NC';
+
+// Split logo text for two-tone effect
+const [logoFirst, ...logoRest] = logoText.split(' ');
+const logoGold = logoRest.join(' ');
 
 const navLinks = [
   { label: 'Home',       href: '/'         },
@@ -16,31 +31,21 @@ const navLinks = [
   { label: 'Why Us',     href: '/#why'     },
   { label: 'Book',       href: '/#contact' },
 ];
-
-const serviceAreas = [
-  'Rutherfordton',
-  'Spindale',
-  'Forest City',
-  'Lake Lure',
-  'Tryon',
-  'Morganton',
-];
 ---
 
 <footer class="site-footer">
   <div class="footer-inner">
 
-    <!-- Grid -->
     <div class="footer-grid">
 
       <!-- Col 1 — Brand -->
       <div class="footer-brand">
         <a href="/" class="footer-logo">
-          LUXE <span class="logo-glow">GLOW</span>
+          {logoFirst}{logoGold && <Fragment>&nbsp;<span class="logo-glow">{logoGold}</span></Fragment>}
         </a>
         <p class="footer-desc">
-          Premium spray tans and mobile spray tan services in Rutherfordton,
-          NC and surrounding areas. Flawless, natural-looking color — every time.
+          Premium spray tans and mobile spray tan services in {city},
+          {state} and surrounding areas. Flawless, natural-looking color — every time.
         </p>
       </div>
 
@@ -68,9 +73,11 @@ const serviceAreas = [
       <div class="footer-col">
         <p class="col-label">Contact</p>
         <ul class="col-list" role="list">
-          <li><a href="tel:8284294759">(828) 429-4759</a></li>
-          <li><a href="#">Instagram</a></li>
-          <li><a href="#">Facebook</a></li>
+          <li><a href={`tel:${phoneRaw}`}>{phone}</a></li>
+          {instagramUrl !== '#' && <li><a href={instagramUrl} target="_blank" rel="noopener noreferrer">Instagram</a></li>}
+          {instagramUrl === '#' && <li><a href="#">Instagram</a></li>}
+          {facebookUrl !== '#' && <li><a href={facebookUrl} target="_blank" rel="noopener noreferrer">Facebook</a></li>}
+          {facebookUrl === '#' && <li><a href="#">Facebook</a></li>}
         </ul>
       </div>
 
@@ -78,10 +85,10 @@ const serviceAreas = [
 
     <!-- Bottom bar -->
     <div class="footer-bottom">
-      <p class="footer-copy">&copy; {year} Luxe Glow. All rights reserved.</p>
+      <p class="footer-copy">{copyrightText}</p>
       <div class="footer-social">
-        <a href="#">Instagram</a>
-        <a href="#">Facebook</a>
+        <a href={instagramUrl} target={instagramUrl !== '#' ? '_blank' : undefined} rel={instagramUrl !== '#' ? 'noopener noreferrer' : undefined}>Instagram</a>
+        <a href={facebookUrl} target={facebookUrl !== '#' ? '_blank' : undefined} rel={facebookUrl !== '#' ? 'noopener noreferrer' : undefined}>Facebook</a>
       </div>
     </div>
 
@@ -100,7 +107,6 @@ const serviceAreas = [
     margin: 0 auto;
   }
 
-  /* Grid */
   .footer-grid {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1fr;
@@ -108,7 +114,6 @@ const serviceAreas = [
     margin-bottom: 48px;
   }
 
-  /* Col 1 — Brand */
   .footer-logo {
     display: block;
     font-family: var(--font-display);
@@ -139,7 +144,6 @@ const serviceAreas = [
     margin: 0;
   }
 
-  /* Column label */
   .col-label {
     font-family: var(--font-body);
     font-size: 10px;
@@ -150,7 +154,6 @@ const serviceAreas = [
     margin: 0 0 20px;
   }
 
-  /* Column link lists */
   .col-list {
     list-style: none;
     margin: 0;
@@ -172,14 +175,12 @@ const serviceAreas = [
     color: var(--color-primary);
   }
 
-  /* Plain text items (service areas) */
   .col-list--text li {
     font-family: var(--font-body);
     font-size: 13px;
     color: var(--color-muted);
   }
 
-  /* Bottom bar */
   .footer-bottom {
     border-top: 1px solid rgba(201, 168, 76, 0.3);
     padding-top: 28px;
@@ -215,7 +216,6 @@ const serviceAreas = [
     color: var(--color-primary);
   }
 
-  /* Tablet */
   @media (max-width: 900px) {
     .footer-grid {
       grid-template-columns: 1fr 1fr;
@@ -230,7 +230,6 @@ const serviceAreas = [
     }
   }
 
-  /* Mobile */
   @media (max-width: 600px) {
     .footer-grid {
       grid-template-columns: 1fr;

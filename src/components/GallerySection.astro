@@ -1,30 +1,49 @@
 ---
-interface Props {}
+import type { GalleryBlock, SiteSettings } from '@lib/queries';
 
-const cards = [1, 2, 3];
+interface Props {
+  block?: GalleryBlock | null;
+  settings?: SiteSettings | null;
+}
+
+const { block, settings } = Astro.props;
+
+const eyebrow  = block?.eyebrow  ?? 'Results';
+const heading  = block?.heading  ?? 'The Glow Speaks for Itself';
+const subtext  = block?.subtext  ?? 'Real results from real clients. No filter, no fake orange — just rich natural-looking bronze that complements every skin tone.';
+const ctaLabel = block?.ctaLabel ?? settings?.ctaLabel ?? 'Book a Session';
+const ctaDest  = block?.ctaDestination ?? settings?.ctaDestination ?? '/#contact';
+const images   = block?.images?.length ? block.images : [];
+const placeholderCount = Math.max(0, 3 - images.length);
 ---
 
 <section id="results" class="gallery-section">
   <div class="gallery-inner" data-reveal>
 
-    <!-- Header -->
     <div class="gallery-header">
       <p class="eyebrow">
         <span class="eyebrow-line" aria-hidden="true"></span>
-        Results
+        {eyebrow}
         <span class="eyebrow-line" aria-hidden="true"></span>
       </p>
-      <h2>The Glow Speaks for Itself</h2>
-      <p class="subtext">
-        Real results from real clients. No filter, no fake orange — just
-        rich natural-looking bronze that complements every skin tone.
-      </p>
+      <h2>{heading}</h2>
+      <p class="subtext">{subtext}</p>
     </div>
 
-    <!-- Grid -->
     <div class="gallery-grid">
-      {cards.map((_, i) => (
-        <div class="gallery-card" role="img" aria-label={`Before and after spray tan result — client ${i + 1}`}>
+      {images.map(({ image, altText }, i) => (
+        <div class="gallery-card" role="img" aria-label={altText ?? `Before and after spray tan result — client ${i + 1}`}>
+          {image?.asset?.url && (
+            <img src={image.asset.url} alt={altText ?? `Spray tan result ${i + 1}`} loading="lazy" />
+          )}
+          <div class="card-tags" aria-hidden="true">
+            <span class="tag tag-before">Before</span>
+            <span class="tag tag-after">After</span>
+          </div>
+        </div>
+      ))}
+      {Array.from({ length: placeholderCount }).map((_, i) => (
+        <div class="gallery-card gallery-card--placeholder" role="img" aria-label={`Before and after spray tan result — client ${images.length + i + 1}`}>
           <div class="card-sheen" aria-hidden="true"></div>
           <span class="card-placeholder" aria-hidden="true">Client Photo</span>
           <div class="card-tags" aria-hidden="true">
@@ -35,9 +54,8 @@ const cards = [1, 2, 3];
       ))}
     </div>
 
-    <!-- CTA -->
     <div class="gallery-cta">
-      <a href="/#contact" class="btn-primary">Book a Session</a>
+      <a href={ctaDest} class="btn-primary">{ctaLabel}</a>
     </div>
 
   </div>
@@ -54,7 +72,6 @@ const cards = [1, 2, 3];
     margin: 0 auto;
   }
 
-  /* Header */
   .gallery-header {
     text-align: center;
     margin-bottom: 60px;
@@ -100,18 +117,14 @@ const cards = [1, 2, 3];
     line-height: 1.8;
   }
 
-  /* Grid */
   .gallery-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2px;
   }
 
-  /* Card */
   .gallery-card {
     aspect-ratio: 3 / 4;
-    background: linear-gradient(180deg, #4A2E1A 0%, #2a1508 100%);
-    border: 1px solid rgba(201, 168, 76, 0.3);
     position: relative;
     overflow: hidden;
     display: flex;
@@ -119,6 +132,20 @@ const cards = [1, 2, 3];
     align-items: center;
     justify-content: flex-end;
     padding: 20px;
+    border: 1px solid rgba(201, 168, 76, 0.3);
+  }
+
+  .gallery-card img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .gallery-card--placeholder {
+    background: linear-gradient(180deg, #4A2E1A 0%, #2a1508 100%);
   }
 
   .card-sheen {
@@ -141,7 +168,6 @@ const cards = [1, 2, 3];
     white-space: nowrap;
   }
 
-  /* Tags */
   .card-tags {
     display: flex;
     width: 100%;
@@ -173,22 +199,16 @@ const cards = [1, 2, 3];
     border: 1px solid rgba(201, 168, 76, 0.3);
   }
 
-  /* CTA */
   .gallery-cta {
     text-align: center;
     margin-top: 48px;
   }
 
-  /* Responsive */
   @media (max-width: 900px) {
-    .gallery-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   @media (max-width: 600px) {
-    .gallery-grid {
-      grid-template-columns: 1fr;
-    }
+    .gallery-grid { grid-template-columns: 1fr; }
   }
 </style>

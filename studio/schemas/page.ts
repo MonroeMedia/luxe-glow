@@ -31,11 +31,13 @@ export default defineType({
       title: 'Page Sections',
       type: 'array',
       of: [
-        // Add section types here as they are built, e.g.:
-        // { type: 'heroSection' },
-        // { type: 'servicesSection' },
-        // { type: 'testimonialsSection' },
-        // { type: 'ctaSection' },
+        { type: 'heroBlock' },
+        { type: 'prepBlock' },
+        { type: 'dayOfBlock' },
+        { type: 'postTanBlock' },
+        { type: 'galleryBlock' },
+        { type: 'whyChooseUsBlock' },
+        { type: 'contactBlock' },
       ],
       description: 'Build the page by adding and reordering sections',
     }),

@@ -1,43 +1,54 @@
 ---
-interface Props {}
+import type { PrepBlock } from '@lib/queries';
 
-const cards = [
+interface Props {
+  block?: PrepBlock | null;
+}
+
+const { block } = Astro.props;
+
+const eyebrow     = block?.eyebrow     ?? 'Preparation';
+const heading     = block?.heading     ?? 'Before Your Appointment';
+const subtext     = block?.subtext     ?? 'The secret to a flawless, long-lasting tan starts at least 24 hours before you walk in. Follow these three steps and your results will speak for themselves.';
+const calloutLabel = block?.calloutLabel ?? 'Important:';
+const calloutText  = block?.calloutText  ?? 'All three of these steps should be completed at least 24 hours before your appointment — not the morning of. Day-of barriers on the skin affect how the solution adheres.';
+
+const defaultCards = [
   {
+    _key: 'shave',
     num: '01',
     title: 'Shave',
     body: 'Shave at least 24 hours prior to your appointment. Shaving immediately before can open pores and cause the solution to appear patchy or uneven. Giving your skin time to settle ensures a smooth, even canvas.',
   },
   {
+    _key: 'exfoliate',
     num: '02',
     title: 'Exfoliate',
     body: 'Use a gentle body scrub or exfoliating mitt to remove dead skin cells — paying extra attention to rough areas like elbows, knees, and ankles. This step is the single biggest factor in how evenly your tan develops and how long it lasts.',
   },
   {
+    _key: 'moisturize',
     num: '03',
     title: 'Moisturize',
     body: 'After exfoliating, apply a lightweight oil-free moisturizer to any dry or rough patches. Hydrated skin absorbs the solution more evenly. Do this the night before — not day-of — so no residue interferes with your tan.',
   },
 ];
+
+const cards = block?.cards?.length ? block.cards : defaultCards;
 ---
 
 <section id="prep" class="prep-section">
   <div class="prep-inner" data-reveal>
 
-    <!-- Header -->
     <div class="prep-header">
       <p class="eyebrow">
         <span class="eyebrow-line" aria-hidden="true"></span>
-        Preparation
+        {eyebrow}
       </p>
-      <h2>Before Your Appointment</h2>
-      <p class="subtext">
-        The secret to a flawless, long-lasting tan starts at least 24 hours
-        before you walk in. Follow these three steps and your results will
-        speak for themselves.
-      </p>
+      <h2>{heading}</h2>
+      <p class="subtext">{subtext}</p>
     </div>
 
-    <!-- Cards -->
     <div class="cards-grid">
       {cards.map(({ num, title, body }) => (
         <div class="card">
@@ -48,12 +59,9 @@ const cards = [
       ))}
     </div>
 
-    <!-- Callout note -->
     <aside class="callout">
       <p>
-        <strong>Important:</strong> All three of these steps should be completed
-        at least 24 hours before your appointment — not the morning of.
-        Day-of barriers on the skin affect how the solution adheres.
+        <strong>{calloutLabel}</strong> {calloutText}
       </p>
     </aside>
 
@@ -71,7 +79,6 @@ const cards = [
     margin: 0 auto;
   }
 
-  /* Header */
   .prep-header {
     margin-bottom: 60px;
   }
@@ -115,14 +122,12 @@ const cards = [
     margin: 0;
   }
 
-  /* Grid */
   .cards-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2px;
   }
 
-  /* Card */
   .card {
     position: relative;
     background: var(--color-surface);
@@ -173,7 +178,6 @@ const cards = [
     margin: 0;
   }
 
-  /* Callout */
   .callout {
     border-left: 3px solid var(--color-primary);
     background: rgba(201, 168, 76, 0.04);
@@ -196,17 +200,11 @@ const cards = [
     font-weight: 500;
   }
 
-  /* Tablet */
   @media (max-width: 900px) {
-    .cards-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    .cards-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
-  /* Mobile */
   @media (max-width: 600px) {
-    .cards-grid {
-      grid-template-columns: 1fr;
-    }
+    .cards-grid { grid-template-columns: 1fr; }
   }
 </style>

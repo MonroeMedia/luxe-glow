@@ -30,6 +30,12 @@ export default defineType({
       type: 'string',
       description: 'e.g. "Starting at $99" or "Free Estimate"',
     }),
+    defineField({
+      name: 'displayOrder',
+      title: 'Display Order',
+      type: 'number',
+      description: 'Lower numbers appear first',
+    }),
   ],
   preview: {
     select: {

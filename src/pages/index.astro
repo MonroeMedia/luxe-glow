@@ -8,9 +8,22 @@ import PostTanSection from '@components/PostTanSection.astro';
 import GallerySection from '@components/GallerySection.astro';
 import WhyChooseUs from '@components/WhyChooseUs.astro';
 import ContactSection from '@components/ContactSection.astro';
-import { getPageBySlug } from '@lib/queries';
+import { getPageBySlug, getSiteSettings } from '@lib/queries';
+import type { HeroBlock, PrepBlock, DayOfBlock, PostTanBlock, GalleryBlock, WhyChooseUsBlock, ContactBlock } from '@lib/queries';
 
-const page = await getPageBySlug('home');
+const [page, settings] = await Promise.all([
+  getPageBySlug('home'),
+  getSiteSettings(),
+]);
+
+// Extract typed section blocks by _type
+const heroBlock    = page?.sections?.find((s) => s._type === 'heroBlock')    as HeroBlock    | undefined;
+const prepBlock    = page?.sections?.find((s) => s._type === 'prepBlock')    as PrepBlock    | undefined;
+const dayOfBlock   = page?.sections?.find((s) => s._type === 'dayOfBlock')   as DayOfBlock   | undefined;
+const postTanBlock = page?.sections?.find((s) => s._type === 'postTanBlock') as PostTanBlock | undefined;
+const galleryBlock = page?.sections?.find((s) => s._type === 'galleryBlock') as GalleryBlock | undefined;
+const whyBlock     = page?.sections?.find((s) => s._type === 'whyChooseUsBlock') as WhyChooseUsBlock | undefined;
+const contactBlock = page?.sections?.find((s) => s._type === 'contactBlock') as ContactBlock | undefined;
 ---
 
 <BaseLayout
@@ -18,13 +31,14 @@ const page = await getPageBySlug('home');
   description={page?.seo?.metaDescription ?? 'Premium spray tans and mobile spray tan services in Rutherfordton, NC. Flawless, natural-looking color — book your session today.'}
   seo={page?.seo}
   canonicalUrl="https://luxeglowtanning.com/"
+  settings={settings}
 >
-  <Hero />
-  <ServiceAreaStrip />
-  <PrepSection />
-  <DayOfSection />
-  <PostTanSection />
-  <GallerySection />
-  <WhyChooseUs />
-  <ContactSection />
+  <Hero block={heroBlock} settings={settings} />
+  <ServiceAreaStrip settings={settings} />
+  <PrepSection block={prepBlock} />
+  <DayOfSection block={dayOfBlock} settings={settings} />
+  <PostTanSection block={postTanBlock} />
+  <GallerySection block={galleryBlock} settings={settings} />
+  <WhyChooseUs block={whyBlock} />
+  <ContactSection block={contactBlock} settings={settings} />
 </BaseLayout>

@@ -1,14 +1,15 @@
 ---
-interface Props {}
+import type { SiteSettings } from '@lib/queries';
 
-const cities = [
-  'Rutherfordton',
-  'Spindale',
-  'Forest City',
-  'Lake Lure',
-  'Tryon',
-  'Morganton',
-];
+interface Props {
+  settings?: SiteSettings | null;
+}
+
+const { settings } = Astro.props;
+
+const cities = settings?.serviceAreas?.length
+  ? settings.serviceAreas
+  : ['Rutherfordton', 'Spindale', 'Forest City', 'Lake Lure', 'Tryon', 'Morganton'];
 ---
 
 <section id="areas" class="area-strip">

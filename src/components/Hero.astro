@@ -1,49 +1,51 @@
 ---
-interface Props {}
+import type { HeroBlock, SiteSettings } from '@lib/queries';
+
+interface Props {
+  block?: HeroBlock | null;
+  settings?: SiteSettings | null;
+}
+
+const { block, settings } = Astro.props;
+
+const eyebrow          = block?.eyebrow          ?? "Rutherfordton's Premier Spray Tan Studio";
+const h1               = block?.h1               ?? 'Spray Tans in';
+const h1Italic         = block?.h1Italic         ?? 'Rutherfordton';
+const subtext          = block?.subtext          ?? 'Offering spray tans and mobile spray tans in Rutherfordton and surrounding areas\u00A0— flawless, streak-free color that never pulls orange.';
+const primaryCtaLabel  = block?.primaryCtaLabel  ?? settings?.ctaLabel ?? 'Book a Session';
+const primaryCtaDest   = block?.primaryCtaDestination  ?? settings?.ctaDestination ?? '/#contact';
+const secondaryCtaLabel = block?.secondaryCtaLabel ?? 'See How It Works';
+const secondaryCtaDest  = block?.secondaryCtaDestination ?? '/#prep';
+const phone            = settings?.phone         ?? '(828) 429-4759';
+const phoneRaw         = phone.replace(/\D/g, '');
 ---
 
 <section id="home" class="hero">
-  <!-- Background layers -->
   <div class="hero-grid" aria-hidden="true"></div>
   <div class="hero-glow" aria-hidden="true"></div>
-
-  <!-- Grain texture -->
   <div class="hero-grain" aria-hidden="true"></div>
 
-  <!-- Content -->
   <div class="hero-content" data-reveal>
+    <p class="eyebrow">{eyebrow}</p>
 
-    <!-- 1. Eyebrow -->
-    <p class="eyebrow">Rutherfordton's Premier Spray Tan Studio</p>
-
-    <!-- 2. H1 -->
     <h1>
-      Spray Tans in<br />
-      <em>Rutherfordton</em>
+      {h1}<br />
+      <em>{h1Italic}</em>
     </h1>
 
-    <!-- 3. Subtext -->
-    <p class="subtext">
-      Offering spray tans and mobile spray tans in Rutherfordton and
-      surrounding areas&nbsp;— flawless, streak-free color that never
-      pulls orange.
-    </p>
+    <p class="subtext" set:html={subtext}></p>
 
-    <!-- 4. CTA buttons -->
     <div class="cta-row">
-      <a href="/#contact" class="btn-primary">Book a Session</a>
-      <a href="/#prep" class="btn-outline">See How It Works</a>
+      <a href={primaryCtaDest} class="btn-primary">{primaryCtaLabel}</a>
+      <a href={secondaryCtaDest} class="btn-outline">{secondaryCtaLabel}</a>
     </div>
 
-    <!-- 5. Phone line -->
     <p class="phone-line">
       Call or text us at&nbsp;
-      <a href="tel:8284294759">(828) 429-4759</a>
+      <a href={`tel:${phoneRaw}`}>{phone}</a>
     </p>
-
   </div>
 
-  <!-- 6. Scroll indicator -->
   <div class="scroll-indicator" aria-hidden="true">
     <span class="scroll-line"></span>
     <span class="scroll-label">Scroll</span>
@@ -62,7 +64,6 @@ interface Props {}
     padding: 120px 5% 100px;
   }
 
-  /* Grain texture */
   .hero-grain {
     position: absolute;
     inset: 0;
@@ -73,7 +74,6 @@ interface Props {}
     mix-blend-mode: overlay;
   }
 
-  /* Grid texture */
   .hero-grid {
     position: absolute;
     inset: 0;
@@ -84,7 +84,6 @@ interface Props {}
     pointer-events: none;
   }
 
-  /* Radial glow */
   .hero-glow {
     position: absolute;
     top: 50%;
@@ -96,7 +95,6 @@ interface Props {}
     pointer-events: none;
   }
 
-  /* Content wrapper */
   .hero-content {
     position: relative;
     z-index: 1;
@@ -108,7 +106,6 @@ interface Props {}
     align-items: center;
   }
 
-  /* 1. Eyebrow */
   .eyebrow {
     display: flex;
     align-items: center;
@@ -131,7 +128,6 @@ interface Props {}
     opacity: 0.6;
   }
 
-  /* 2. H1 */
   h1 {
     font-family: var(--font-display);
     font-size: clamp(42px, 6vw, 76px);
@@ -146,7 +142,6 @@ interface Props {}
     color: var(--color-primary);
   }
 
-  /* 3. Subtext */
   .subtext {
     font-family: var(--font-body);
     font-size: 17px;
@@ -158,7 +153,6 @@ interface Props {}
     margin: 0 0 44px;
   }
 
-  /* 4. CTA row */
   .cta-row {
     display: flex;
     gap: 16px;
@@ -166,7 +160,6 @@ interface Props {}
     flex-wrap: wrap;
   }
 
-  /* 5. Phone line */
   .phone-line {
     font-family: var(--font-body);
     font-size: 13px;
@@ -184,7 +177,6 @@ interface Props {}
     color: var(--color-accent);
   }
 
-  /* 6. Scroll indicator */
   .scroll-indicator {
     position: absolute;
     bottom: 32px;
@@ -224,11 +216,8 @@ interface Props {}
     50%       { opacity: 0.9; }
   }
 
-  /* Mobile */
   @media (max-width: 600px) {
-    .hero {
-      padding: 100px 5% 80px;
-    }
+    .hero { padding: 100px 5% 80px; }
 
     .cta-row {
       flex-direction: column;

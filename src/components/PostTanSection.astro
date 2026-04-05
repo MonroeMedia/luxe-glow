@@ -1,55 +1,76 @@
 ---
-interface Props {}
+import type { PostTanBlock } from '@lib/queries';
 
-const steps = [
+interface Props {
+  block?: PostTanBlock | null;
+}
+
+const { block } = Astro.props;
+
+const eyebrow      = block?.eyebrow      ?? 'After Care';
+const heading      = block?.heading      ?? 'Protect Your Investment';
+const subtext      = block?.subtext      ?? 'How you treat your tan in the first 24 hours determines how beautiful and long-lasting it will be. Follow these steps and your glow will thank you.';
+const calloutLabel = block?.calloutLabel ?? 'Note:';
+const calloutText  = block?.calloutText  ?? 'All of the above applies to your first day post-tan. After that you can return to your regular hygiene routine — just keep up the moisturizer.';
+const imageUrl     = block?.image?.asset?.url ?? null;
+const imageAlt     = block?.image?.alt ?? 'Moisturizing and caring for a fresh spray tan';
+
+const defaultSteps = [
   {
+    _key: 'rinse',
     num: '1',
     title: 'Rinse at the Right Time',
     body: 'Your technician will let you know your development window. When it is time, rinse with warm water — never hot. Hot water opens pores and accelerates fading. Keep it gentle and brief.',
   },
   {
+    _key: 'hands',
     num: '2',
     title: 'Hands Only — No Washcloth',
     body: 'When rinsing use only your hands to gently rub the skin. The goal is to remove the surface bronzer without disturbing the developing DHA underneath. A washcloth or loofah will streak and strip your tan before it is set.',
   },
   {
+    _key: 'moisturize',
     num: '3',
     title: 'Moisturize Twice Daily',
     body: 'Apply a hydrating tan-extending moisturizer morning and night. Dry skin is the number one enemy of a lasting spray tan. The more you hydrate the longer and more even your fade will be.',
   },
   {
+    _key: 'extend',
     num: '4',
     title: 'Extend Your Glow',
     body: 'Want your tan to last even longer? Reach for a gradual tan lotion on dry areas — it refreshes the color between appointments without streaking.',
   },
   {
+    _key: 'resume',
     num: '5',
     title: 'Resume Normal Routine After Day One',
     body: 'All of the above applies to your first day post-tan. After that you can return to your regular hygiene routine — just keep up the moisturizer.',
   },
 ];
+
+const steps = block?.steps?.length ? block.steps : defaultSteps;
 ---
 
 <section id="aftercare" class="posttan-section">
   <div class="posttan-inner" data-reveal>
 
-    <!-- Image column -->
-    <div class="posttan-image" role="img" aria-label="Moisturizing and caring for a fresh spray tan to extend its life">
-      <span class="image-label" aria-hidden="true">Photo Placeholder</span>
-    </div>
+    {imageUrl ? (
+      <div class="posttan-image">
+        <img src={imageUrl} alt={imageAlt} loading="lazy" />
+      </div>
+    ) : (
+      <div class="posttan-image posttan-image--placeholder" role="img" aria-label="Moisturizing and caring for a fresh spray tan to extend its life">
+        <span class="image-label" aria-hidden="true">Photo Placeholder</span>
+      </div>
+    )}
 
-    <!-- Content column -->
     <div class="posttan-content">
       <p class="eyebrow">
         <span class="eyebrow-line" aria-hidden="true"></span>
-        After Care
+        {eyebrow}
       </p>
-      <h2>Protect Your Investment</h2>
-      <p class="intro">
-        How you treat your tan in the first 24 hours determines how beautiful
-        and long-lasting it will be. Follow these steps and your glow will
-        thank you.
-      </p>
+      <h2>{heading}</h2>
+      <p class="intro">{subtext}</p>
 
       <ol class="steps" role="list">
         {steps.map(({ num, title, body }) => (
@@ -65,9 +86,7 @@ const steps = [
 
       <aside class="callout">
         <p>
-          <strong>Note:</strong> All of the above applies to your first day
-          post-tan. After that you can return to your regular hygiene routine
-          — just keep up the moisturizer.
+          <strong>{calloutLabel}</strong> {calloutText}
         </p>
       </aside>
     </div>
@@ -90,19 +109,28 @@ const steps = [
     align-items: center;
   }
 
-  /* Image column */
   .posttan-image {
     position: relative;
     overflow: hidden;
     aspect-ratio: 3 / 4;
-    background: linear-gradient(160deg, #4A2E1A 0%, #1a0e06 60%, #111111 100%);
     border: 1px solid rgba(201, 168, 76, 0.3);
+  }
+
+  .posttan-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .posttan-image--placeholder {
+    background: linear-gradient(160deg, #4A2E1A 0%, #1a0e06 60%, #111111 100%);
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .posttan-image::after {
+  .posttan-image--placeholder::after {
     content: '';
     position: absolute;
     inset: 0;
@@ -124,7 +152,6 @@ const steps = [
     z-index: 1;
   }
 
-  /* Eyebrow */
   .eyebrow {
     display: flex;
     align-items: center;
@@ -164,7 +191,6 @@ const steps = [
     margin: 0 0 44px;
   }
 
-  /* Steps */
   .steps {
     display: flex;
     flex-direction: column;
@@ -211,7 +237,6 @@ const steps = [
     margin: 0;
   }
 
-  /* Callout */
   .callout {
     border-left: 3px solid var(--color-primary);
     background: rgba(201, 168, 76, 0.04);
@@ -234,7 +259,6 @@ const steps = [
     font-weight: 500;
   }
 
-  /* Responsive */
   @media (max-width: 900px) {
     .posttan-inner {
       grid-template-columns: 1fr;
@@ -246,8 +270,6 @@ const steps = [
       aspect-ratio: 16 / 9;
     }
 
-    .posttan-content {
-      order: 2;
-    }
+    .posttan-content { order: 2; }
   }
 </style>

@@ -1,23 +1,43 @@
 ---
-interface Props {}
+import type { DayOfBlock, SiteSettings } from '@lib/queries';
 
-const steps = [
+interface Props {
+  block?: DayOfBlock | null;
+  settings?: SiteSettings | null;
+}
+
+const { block, settings } = Astro.props;
+
+const eyebrow    = block?.eyebrow    ?? 'Day of Appointment';
+const heading    = block?.heading    ?? 'Arrive Ready to Glow';
+const subtext    = block?.subtext    ?? 'On the day of your session, a little preparation goes a long way. Keep your skin completely barrier-free so the solution can do its job.';
+const ctaLabel   = block?.ctaLabel   ?? settings?.ctaLabel ?? 'Book a Session';
+const ctaDest    = block?.ctaDestination ?? settings?.ctaDestination ?? '/#contact';
+const imageUrl   = block?.image?.asset?.url ?? null;
+const imageAlt   = block?.image?.alt ?? 'Spray tan session preparation';
+
+const defaultSteps = [
   {
+    _key: 'barriers',
     num: '1',
     title: 'No Barriers on Skin',
     body: 'Arrive with clean product-free skin. Skip the lotion, perfume, deodorant, and makeup. Even lightweight products create a barrier that prevents the solution from bonding evenly — and no one wants a patchy tan.',
   },
   {
+    _key: 'clothing',
     num: '2',
     title: 'Wear Loose Dark Clothing',
     body: 'Bring loose-fitting clothes to change into after your session. Tight clothing can cause the solution to rub, crease, or transfer before it sets. Dark fabrics are your best friend on spray tan day.',
   },
   {
+    _key: 'undergarments',
     num: '3',
     title: 'Appropriate Undergarments',
     body: 'Wear or bring minimal undergarments for your session — a thong or swimsuit bottom works great. Full coverage during application leads to visible tan lines. Whatever you are comfortable with is what we will work with.',
   },
 ];
+
+const steps = block?.steps?.length ? block.steps : defaultSteps;
 ---
 
 <section id="dayof" class="dayof-section">
@@ -25,17 +45,13 @@ const steps = [
 
   <div class="dayof-inner" data-reveal>
 
-    <!-- Content column -->
     <div class="dayof-content">
       <p class="eyebrow">
         <span class="eyebrow-line" aria-hidden="true"></span>
-        Day of Appointment
+        {eyebrow}
       </p>
-      <h2>Arrive Ready to Glow</h2>
-      <p class="intro">
-        On the day of your session, a little preparation goes a long way.
-        Keep your skin completely barrier-free so the solution can do its job.
-      </p>
+      <h2>{heading}</h2>
+      <p class="intro">{subtext}</p>
 
       <ol class="steps" role="list">
         {steps.map(({ num, title, body }) => (
@@ -49,13 +65,18 @@ const steps = [
         ))}
       </ol>
 
-      <a href="/#contact" class="btn-primary dayof-cta">Book a Session</a>
+      <a href={ctaDest} class="btn-primary dayof-cta">{ctaLabel}</a>
     </div>
 
-    <!-- Image column -->
-    <div class="dayof-image" role="img" aria-label="Spray tan session preparation — clean, product-free skin ready for application">
-      <span class="image-label" aria-hidden="true">Photo Placeholder</span>
-    </div>
+    {imageUrl ? (
+      <div class="dayof-image">
+        <img src={imageUrl} alt={imageAlt} loading="lazy" />
+      </div>
+    ) : (
+      <div class="dayof-image dayof-image--placeholder" role="img" aria-label="Spray tan session preparation — clean, product-free skin ready for application">
+        <span class="image-label" aria-hidden="true">Photo Placeholder</span>
+      </div>
+    )}
 
   </div>
 </section>
@@ -85,7 +106,6 @@ const steps = [
     align-items: center;
   }
 
-  /* Eyebrow */
   .eyebrow {
     display: flex;
     align-items: center;
@@ -106,7 +126,6 @@ const steps = [
     flex-shrink: 0;
   }
 
-  /* Heading */
   h2 {
     font-family: var(--font-display);
     font-size: clamp(30px, 4vw, 48px);
@@ -116,7 +135,6 @@ const steps = [
     line-height: 1.2;
   }
 
-  /* Intro */
   .intro {
     font-family: var(--font-body);
     font-size: 16px;
@@ -127,7 +145,6 @@ const steps = [
     margin: 0 0 44px;
   }
 
-  /* Steps */
   .steps {
     display: flex;
     flex-direction: column;
@@ -174,25 +191,33 @@ const steps = [
     margin: 0;
   }
 
-  /* CTA */
   .dayof-cta {
     display: inline-block;
     margin-top: 40px;
   }
 
-  /* Image column */
   .dayof-image {
     position: relative;
     overflow: hidden;
     aspect-ratio: 3 / 4;
-    background: linear-gradient(160deg, #4A2E1A 0%, #1a0e06 60%, #111111 100%);
     border: 1px solid rgba(201, 168, 76, 0.3);
+  }
+
+  .dayof-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .dayof-image--placeholder {
+    background: linear-gradient(160deg, #4A2E1A 0%, #1a0e06 60%, #111111 100%);
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .dayof-image::after {
+  .dayof-image--placeholder::after {
     content: '';
     position: absolute;
     inset: 0;
@@ -214,16 +239,13 @@ const steps = [
     z-index: 1;
   }
 
-  /* Responsive */
   @media (max-width: 900px) {
     .dayof-inner {
       grid-template-columns: 1fr;
       gap: 48px;
     }
 
-    .dayof-content {
-      order: 1;
-    }
+    .dayof-content { order: 1; }
 
     .dayof-image {
       order: 2;
