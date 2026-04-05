@@ -1,0 +1,194 @@
+---
+interface Props {}
+
+const cards = [1, 2, 3];
+---
+
+<section id="results" class="gallery-section">
+  <div class="gallery-inner">
+
+    <!-- Header -->
+    <div class="gallery-header">
+      <p class="eyebrow">
+        <span class="eyebrow-line" aria-hidden="true"></span>
+        Results
+        <span class="eyebrow-line" aria-hidden="true"></span>
+      </p>
+      <h2>The Glow Speaks for Itself</h2>
+      <p class="subtext">
+        Real results from real clients. No filter, no fake orange — just
+        rich natural-looking bronze that complements every skin tone.
+      </p>
+    </div>
+
+    <!-- Grid -->
+    <div class="gallery-grid">
+      {cards.map(() => (
+        <div class="gallery-card">
+          <div class="card-sheen" aria-hidden="true"></div>
+          <span class="card-placeholder">Client Photo</span>
+          <div class="card-tags">
+            <span class="tag tag-before">Before</span>
+            <span class="tag tag-after">After</span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- CTA -->
+    <div class="gallery-cta">
+      <a href="/#contact" class="btn-primary">Book a Session</a>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .gallery-section {
+    background: #111111;
+    padding: 100px 5%;
+  }
+
+  .gallery-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Header */
+  .gallery-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .eyebrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-body);
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    margin: 0 0 20px;
+  }
+
+  .eyebrow-line {
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(30px, 4vw, 48px);
+    color: var(--color-text);
+    margin: 0 0 18px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .subtext {
+    font-family: var(--font-body);
+    font-size: 16px;
+    color: var(--color-muted);
+    max-width: 560px;
+    margin: 0 auto;
+    font-weight: 300;
+    line-height: 1.8;
+  }
+
+  /* Grid */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  /* Card */
+  .gallery-card {
+    aspect-ratio: 3 / 4;
+    background: linear-gradient(180deg, #4A2E1A 0%, #2a1508 100%);
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 20px;
+  }
+
+  .card-sheen {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 40%, rgba(201, 168, 76, 0.08) 50%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .card-placeholder {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    font-family: var(--font-body);
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(201, 168, 76, 0.3);
+    white-space: nowrap;
+  }
+
+  /* Tags */
+  .card-tags {
+    display: flex;
+    width: 100%;
+    gap: 2px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .tag {
+    flex: 1;
+    text-align: center;
+    font-family: var(--font-body);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 8px 0;
+  }
+
+  .tag-before {
+    background: rgba(0, 0, 0, 0.7);
+    color: var(--color-muted);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .tag-after {
+    background: rgba(201, 168, 76, 0.2);
+    color: var(--color-primary);
+    border: 1px solid rgba(201, 168, 76, 0.3);
+  }
+
+  /* CTA */
+  .gallery-cta {
+    text-align: center;
+    margin-top: 48px;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .gallery-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

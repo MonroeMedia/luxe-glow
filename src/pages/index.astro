@@ -5,6 +5,7 @@ import ServiceAreaStrip from '@components/ServiceAreaStrip.astro';
 import PrepSection from '@components/PrepSection.astro';
 import DayOfSection from '@components/DayOfSection.astro';
 import PostTanSection from '@components/PostTanSection.astro';
+import GallerySection from '@components/GallerySection.astro';
 import { getPageBySlug } from '@lib/queries';
 
 const page = await getPageBySlug('home');
@@ -20,4 +21,5 @@ const page = await getPageBySlug('home');
   <PrepSection />
   <DayOfSection />
   <PostTanSection />
+  <GallerySection />
 </BaseLayout>
