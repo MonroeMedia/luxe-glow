@@ -1,0 +1,253 @@
+---
+interface Props {}
+
+const steps = [
+  {
+    num: '1',
+    title: 'Rinse at the Right Time',
+    body: 'Your technician will let you know your development window. When it is time, rinse with warm water — never hot. Hot water opens pores and accelerates fading. Keep it gentle and brief.',
+  },
+  {
+    num: '2',
+    title: 'Hands Only — No Washcloth',
+    body: 'When rinsing use only your hands to gently rub the skin. The goal is to remove the surface bronzer without disturbing the developing DHA underneath. A washcloth or loofah will streak and strip your tan before it is set.',
+  },
+  {
+    num: '3',
+    title: 'Moisturize Twice Daily',
+    body: 'Apply a hydrating tan-extending moisturizer morning and night. Dry skin is the number one enemy of a lasting spray tan. The more you hydrate the longer and more even your fade will be.',
+  },
+  {
+    num: '4',
+    title: 'Extend Your Glow',
+    body: 'Want your tan to last even longer? Reach for a gradual tan lotion on dry areas — it refreshes the color between appointments without streaking.',
+  },
+  {
+    num: '5',
+    title: 'Resume Normal Routine After Day One',
+    body: 'All of the above applies to your first day post-tan. After that you can return to your regular hygiene routine — just keep up the moisturizer.',
+  },
+];
+---
+
+<section id="aftercare" class="posttan-section">
+  <div class="posttan-inner">
+
+    <!-- Image column -->
+    <div class="posttan-image" aria-label="Photo placeholder">
+      <span class="image-label">Photo Placeholder</span>
+    </div>
+
+    <!-- Content column -->
+    <div class="posttan-content">
+      <p class="eyebrow">
+        <span class="eyebrow-line" aria-hidden="true"></span>
+        After Care
+      </p>
+      <h2>Protect Your Investment</h2>
+      <p class="intro">
+        How you treat your tan in the first 24 hours determines how beautiful
+        and long-lasting it will be. Follow these steps and your glow will
+        thank you.
+      </p>
+
+      <ol class="steps" role="list">
+        {steps.map(({ num, title, body }) => (
+          <li class="step">
+            <span class="step-num" aria-hidden="true">{num}</span>
+            <div class="step-text">
+              <p class="step-title">{title}</p>
+              <p class="step-body">{body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <aside class="callout">
+        <p>
+          <strong>Note:</strong> All of the above applies to your first day
+          post-tan. After that you can return to your regular hygiene routine
+          — just keep up the moisturizer.
+        </p>
+      </aside>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .posttan-section {
+    background: #111111;
+    padding: 100px 5%;
+  }
+
+  .posttan-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 72px;
+    align-items: center;
+  }
+
+  /* Image column */
+  .posttan-image {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3 / 4;
+    background: linear-gradient(160deg, #4A2E1A 0%, #1a0e06 60%, #111111 100%);
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .posttan-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 40%, rgba(201, 168, 76, 0.08) 50%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .image-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    font-family: var(--font-body);
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(201, 168, 76, 0.4);
+    white-space: nowrap;
+    z-index: 1;
+  }
+
+  /* Eyebrow */
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-body);
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    margin: 0 0 20px;
+  }
+
+  .eyebrow-line {
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(30px, 4vw, 48px);
+    color: var(--color-text);
+    margin: 0 0 18px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .intro {
+    font-family: var(--font-body);
+    font-size: 16px;
+    color: var(--color-muted);
+    max-width: 560px;
+    font-weight: 300;
+    line-height: 1.8;
+    margin: 0 0 44px;
+  }
+
+  /* Steps */
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .step {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+  }
+
+  .step-num {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border: 1px solid var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  .step-title {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--color-text);
+    margin: 0 0 6px;
+  }
+
+  .step-body {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--color-muted);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* Callout */
+  .callout {
+    border-left: 3px solid var(--color-primary);
+    background: rgba(201, 168, 76, 0.04);
+    padding: 24px 32px;
+    margin-top: 32px;
+  }
+
+  .callout p {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--color-muted);
+    font-style: italic;
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  .callout strong {
+    color: var(--color-primary);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .posttan-inner {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+
+    .posttan-image {
+      order: 1;
+      aspect-ratio: 16 / 9;
+    }
+
+    .posttan-content {
+      order: 2;
+    }
+  }
+</style>
