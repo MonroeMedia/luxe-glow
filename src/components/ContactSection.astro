@@ -1,0 +1,491 @@
+---
+interface Props {}
+
+const areas = [
+  'Rutherfordton',
+  'Spindale',
+  'Forest City',
+  'Lake Lure',
+  'Tryon',
+  'Morganton',
+  'Other',
+];
+---
+
+<section id="contact" class="contact-section">
+  <div class="contact-ambient" aria-hidden="true"></div>
+
+  <div class="contact-inner">
+
+    <!-- Left column -->
+    <div class="contact-info">
+      <p class="eyebrow">
+        <span class="eyebrow-line" aria-hidden="true"></span>
+        Book a Session
+      </p>
+      <h2>Ready to Glow?<br />Let's Make It Happen.</h2>
+      <p class="contact-lead">
+        Fill out the form and we will reach out to confirm your appointment.
+        Prefer to skip the form? Call or text us directly — we are happy to
+        book you that way too.
+      </p>
+
+      <ul class="contact-details" role="list">
+        <li class="contact-item">
+          <span class="detail-label">Phone / Text</span>
+          <a href="tel:8284294759" class="detail-value">(828) 429-4759</a>
+        </li>
+        <li class="contact-item">
+          <span class="detail-label">Location</span>
+          <span class="detail-value">Rutherfordton, NC</span>
+          <span class="detail-sub">Mobile service available throughout the area</span>
+        </li>
+        <li class="contact-item">
+          <span class="detail-label">Service Areas</span>
+          <span class="detail-areas">
+            Rutherfordton · Spindale · Forest City · Lake Lure · Tryon · Morganton
+          </span>
+        </li>
+      </ul>
+
+      <div class="contact-social">
+        <a href="#" class="social-link">Instagram</a>
+        <a href="#" class="social-link">Facebook</a>
+      </div>
+    </div>
+
+    <!-- Right column — form -->
+    <div class="form-wrap">
+      <h3 class="form-heading">Book a Session</h3>
+      <p class="form-subtext">We will confirm your appointment within 24 hours.</p>
+
+      <form id="contact-form" novalidate>
+        <div class="field-row">
+          <div class="field">
+            <label for="firstName" class="field-label">First Name</label>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              placeholder="Jane"
+              required
+              class="field-input"
+            />
+          </div>
+          <div class="field">
+            <label for="lastName" class="field-label">Last Name</label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              placeholder="Doe"
+              required
+              class="field-input"
+            />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="phone" class="field-label">Phone Number</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="(828) 000-0000"
+            required
+            class="field-input"
+          />
+        </div>
+
+        <div class="field">
+          <label for="area" class="field-label">Your City / Area</label>
+          <div class="select-wrap">
+            <select id="area" name="area" required class="field-input field-select">
+              <option value="" disabled selected>Select your area</option>
+              {areas.map((a) => <option value={a}>{a}</option>)}
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="message" class="field-label">Message</label>
+          <textarea
+            id="message"
+            name="message"
+            placeholder="Preferred days, times, or any questions..."
+            class="field-input field-textarea"
+          ></textarea>
+        </div>
+
+        <button type="submit" id="submit-btn" class="btn-primary submit-btn">
+          Request Appointment
+        </button>
+
+        <div id="form-success" class="form-msg form-success" hidden>
+          Thank you! We will be in touch within 24 hours to confirm your appointment.
+        </div>
+        <div id="form-error" class="form-msg form-error" hidden>
+          Something went wrong. Please call or text us directly at (828) 429-4759.
+        </div>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .contact-section {
+    position: relative;
+    overflow: hidden;
+    background: #111111;
+    padding: 100px 5%;
+  }
+
+  .contact-ambient {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at bottom center, rgba(201, 168, 76, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .contact-inner {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  /* Eyebrow */
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-body);
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    margin: 0 0 20px;
+  }
+
+  .eyebrow-line {
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  /* Heading */
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3.5vw, 44px);
+    color: var(--color-text);
+    margin: 0 0 20px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .contact-lead {
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--color-muted);
+    line-height: 1.8;
+    margin: 0 0 40px;
+  }
+
+  /* Contact details */
+  .contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .contact-item {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(201, 168, 76, 0.3);
+  }
+
+  .contact-item:last-child {
+    border-bottom: none;
+  }
+
+  .detail-label {
+    font-family: var(--font-body);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .detail-value {
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--color-text);
+    text-decoration: none;
+    transition: color var(--transition);
+  }
+
+  a.detail-value:hover {
+    color: var(--color-accent);
+  }
+
+  .detail-sub {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--color-muted);
+    margin-top: 4px;
+  }
+
+  .detail-areas {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+
+  /* Social */
+  .contact-social {
+    display: flex;
+    gap: 16px;
+    margin-top: 36px;
+  }
+
+  .social-link {
+    font-family: var(--font-body);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(201, 168, 76, 0.6);
+    padding-bottom: 4px;
+    font-weight: 500;
+    transition: color var(--transition), border-color var(--transition);
+  }
+
+  .social-link:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+  }
+
+  /* Form container */
+  .form-wrap {
+    position: relative;
+    background: #161616;
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    padding: 48px;
+  }
+
+  .form-wrap::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--color-primary), transparent);
+  }
+
+  .form-heading {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: var(--color-text);
+    margin: 0 0 8px;
+    font-weight: 700;
+  }
+
+  .form-subtext {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--color-muted);
+    margin: 0 0 36px;
+  }
+
+  /* Fields */
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+
+  .field:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .field-label {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .field-input {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    color: var(--color-text);
+    padding: 14px 16px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    width: 100%;
+    outline: none;
+    border-radius: 0;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: border-color 0.2s ease;
+    box-sizing: border-box;
+  }
+
+  .field-input:focus {
+    border-color: var(--color-primary);
+  }
+
+  .field-input::placeholder {
+    color: rgba(168, 152, 128, 0.5);
+  }
+
+  /* Select wrapper with custom arrow */
+  .select-wrap {
+    position: relative;
+  }
+
+  .select-wrap::after {
+    content: '▾';
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    translate: 0 -50%;
+    color: var(--color-primary);
+    font-size: 12px;
+    pointer-events: none;
+  }
+
+  .field-select {
+    cursor: pointer;
+  }
+
+  .field-select option {
+    background: #1a1a1a;
+    color: var(--color-text);
+  }
+
+  /* Textarea */
+  .field-textarea {
+    height: 100px;
+    resize: none;
+    line-height: 1.6;
+  }
+
+  /* Submit */
+  .submit-btn {
+    width: 100%;
+    text-align: center;
+    margin-top: 8px;
+    cursor: pointer;
+  }
+
+  /* Messages */
+  .form-msg {
+    font-family: var(--font-body);
+    font-size: 14px;
+    margin-top: 16px;
+    line-height: 1.6;
+  }
+
+  .form-success {
+    color: var(--color-primary);
+  }
+
+  .form-error {
+    color: #E24B4A;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .contact-inner {
+      grid-template-columns: 1fr;
+      gap: 56px;
+    }
+
+    .form-wrap {
+      padding: 32px 24px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .field-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+  const successMsg = document.getElementById('form-success') as HTMLElement | null;
+  const errorMsg = document.getElementById('form-error') as HTMLElement | null;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!submitBtn) return;
+
+    submitBtn.textContent = 'Sending...';
+    submitBtn.disabled = true;
+    if (successMsg) successMsg.hidden = true;
+    if (errorMsg) errorMsg.hidden = true;
+
+    const data = {
+      firstName: (form.elements.namedItem('firstName') as HTMLInputElement).value,
+      lastName:  (form.elements.namedItem('lastName')  as HTMLInputElement).value,
+      phone:     (form.elements.namedItem('phone')     as HTMLInputElement).value,
+      area:      (form.elements.namedItem('area')      as HTMLSelectElement).value,
+      message:   (form.elements.namedItem('message')   as HTMLTextAreaElement).value,
+    };
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (res.ok) {
+        // Hide all form fields on success
+        Array.from(form.elements).forEach((el) => {
+          (el as HTMLElement).style.display = 'none';
+        });
+        form.querySelectorAll('.field, .field-row, .submit-btn').forEach((el) => {
+          (el as HTMLElement).style.display = 'none';
+        });
+        submitBtn.style.display = 'none';
+        if (successMsg) successMsg.hidden = false;
+      } else {
+        throw new Error('Server error');
+      }
+    } catch {
+      submitBtn.textContent = 'Request Appointment';
+      submitBtn.disabled = false;
+      if (errorMsg) errorMsg.hidden = false;
+    }
+  });
+</script>
