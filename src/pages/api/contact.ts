@@ -10,7 +10,8 @@ export const POST: APIRoute = async ({ request }) => {
 
   try {
     await resend.emails.send({
-      from: 'Luxe Glow Website <noreply@luxeglowtan.com>',
+      from: 'Luxe Glow <contact@luxeglowtanning.com>',
+      replyTo: 'miss.ruh07@gmail.com',
       to: 'miss.ruh07@gmail.com',
       subject: `New Booking Request — ${firstName} ${lastName}`,
       html: `
