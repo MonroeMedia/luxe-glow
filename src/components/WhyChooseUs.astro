@@ -236,4 +236,12 @@ const cards = block?.cards?.length ? block.cards : defaultCards;
       padding: 36px 28px;
     }
   }
+
+  @media (max-width: 600px) {
+    .why-section { padding: 64px 5%; }
+
+    .callout-heading {
+      font-size: clamp(20px, 5vw, 26px);
+    }
+  }
 </style>

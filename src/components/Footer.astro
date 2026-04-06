@@ -169,6 +169,8 @@ const navLinks = [
     color: var(--color-muted);
     text-decoration: none;
     transition: color 0.2s ease;
+    padding: 6px 0;
+    display: inline-block;
   }
 
   .col-list a:hover {
@@ -231,6 +233,8 @@ const navLinks = [
   }
 
   @media (max-width: 600px) {
+    .site-footer { padding: 48px 5% 32px; }
+
     .footer-grid {
       grid-template-columns: 1fr;
     }

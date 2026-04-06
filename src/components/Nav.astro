@@ -177,12 +177,16 @@ const logoGold = logoRest.join(' ');
   .nav-toggle {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     gap: 5px;
     background: none;
     border: none;
     cursor: pointer;
     padding: 8px;
     margin-left: auto;
+    min-width: 44px;
+    min-height: 44px;
   }
 
   .nav-toggle span {
@@ -247,6 +251,13 @@ const logoGold = logoRest.join(' ');
   .mobile-cta {
     align-self: flex-start;
     margin-top: 0.5rem;
+  }
+
+  @media (max-width: 480px) {
+    .mobile-cta {
+      align-self: stretch;
+      text-align: center;
+    }
   }
 
   /* Desktop breakpoint */
