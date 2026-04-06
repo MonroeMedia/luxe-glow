@@ -9,6 +9,7 @@ import GallerySection from '@components/GallerySection.astro';
 import WhyChooseUs from '@components/WhyChooseUs.astro';
 import ContactSection from '@components/ContactSection.astro';
 import { getPageBySlug, getSiteSettings } from '@lib/queries';
+import { urlFor } from '@lib/sanity';
 import type { HeroBlock, PrepBlock, DayOfBlock, PostTanBlock, GalleryBlock, WhyChooseUsBlock, ContactBlock } from '@lib/queries';
 
 const [page, settings] = await Promise.all([
@@ -24,6 +25,11 @@ const postTanBlock = page?.sections?.find((s) => s._type === 'postTanBlock') as 
 const galleryBlock = page?.sections?.find((s) => s._type === 'galleryBlock') as GalleryBlock | undefined;
 const whyBlock     = page?.sections?.find((s) => s._type === 'whyChooseUsBlock') as WhyChooseUsBlock | undefined;
 const contactBlock = page?.sections?.find((s) => s._type === 'contactBlock') as ContactBlock | undefined;
+
+// Preload hero image for LCP
+const heroImageUrl = heroBlock?.backgroundImage?.asset?._id
+  ? urlFor(heroBlock.backgroundImage).width(1920).format('webp').quality(80).url()
+  : null;
 ---
 
 <BaseLayout
@@ -32,6 +38,7 @@ const contactBlock = page?.sections?.find((s) => s._type === 'contactBlock') as 
   seo={page?.seo}
   canonicalUrl="https://luxeglowtanning.com/"
   settings={settings}
+  heroImageUrl={heroImageUrl}
 >
   <Hero block={heroBlock} settings={settings} />
   <ServiceAreaStrip settings={settings} />

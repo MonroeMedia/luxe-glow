@@ -14,7 +14,7 @@ const subtext      = block?.subtext      ?? 'How you treat your tan in the first
 const calloutLabel = block?.calloutLabel ?? 'Note:';
 const calloutText  = block?.calloutText  ?? 'All of the above applies to your first day post-tan. After that you can return to your regular hygiene routine — just keep up the moisturizer.';
 const imageUrl     = block?.image?.asset?._id
-  ? urlFor(block.image).format('webp').quality(85).url()
+  ? urlFor(block.image).width(800).format('webp').quality(85).url()
   : null;
 const imageAlt     = block?.image?.alt ?? 'Moisturizing and caring for a fresh spray tan';
 

@@ -34,7 +34,7 @@ const placeholderCount = Math.max(0, 3 - images.length);
     <div class="gallery-grid">
       {images.map(({ image, altText }, i) => {
         const imgUrl = image?.asset?._id
-          ? urlFor(image).width(900).format('webp').quality(85).url()
+          ? urlFor(image).width(600).format('webp').quality(85).url()
           : null;
         return (
         <div class="gallery-card" role="img" aria-label={altText ?? `Before and after spray tan result — client ${i + 1}`}>

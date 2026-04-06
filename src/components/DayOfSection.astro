@@ -15,7 +15,7 @@ const subtext    = block?.subtext    ?? 'On the day of your session, a little pr
 const ctaLabel   = block?.ctaLabel   ?? settings?.ctaLabel ?? 'Book a Session';
 const ctaDest    = block?.ctaDestination ?? settings?.ctaDestination ?? '/#contact';
 const imageUrl   = block?.image?.asset?._id
-  ? urlFor(block.image).format('webp').quality(85).url()
+  ? urlFor(block.image).width(800).format('webp').quality(85).url()
   : null;
 const imageAlt   = block?.image?.alt ?? 'Spray tan session preparation';
 
