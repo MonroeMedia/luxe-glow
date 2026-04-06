@@ -1,5 +1,6 @@
 ---
 import type { DayOfBlock, SiteSettings } from '@lib/queries';
+import { urlFor } from '@lib/sanity';
 
 interface Props {
   block?: DayOfBlock | null;
@@ -13,7 +14,9 @@ const heading    = block?.heading    ?? 'Arrive Ready to Glow';
 const subtext    = block?.subtext    ?? 'On the day of your session, a little preparation goes a long way. Keep your skin completely barrier-free so the solution can do its job.';
 const ctaLabel   = block?.ctaLabel   ?? settings?.ctaLabel ?? 'Book a Session';
 const ctaDest    = block?.ctaDestination ?? settings?.ctaDestination ?? '/#contact';
-const imageUrl   = block?.image?.asset?.url ?? null;
+const imageUrl   = block?.image?.asset?._id
+  ? urlFor(block.image).format('webp').quality(85).url()
+  : null;
 const imageAlt   = block?.image?.alt ?? 'Spray tan session preparation';
 
 const defaultSteps = [

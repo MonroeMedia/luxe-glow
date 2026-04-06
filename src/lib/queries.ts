@@ -91,7 +91,7 @@ export interface DayOfBlock {
   heading?: string;
   subtext?: string;
   steps?: StepItem[];
-  image?: { asset: { url: string }; alt?: string };
+  image?: { asset: { _id: string; url: string }; alt?: string };
   ctaLabel?: string;
   ctaDestination?: string;
 }
@@ -103,14 +103,14 @@ export interface PostTanBlock {
   heading?: string;
   subtext?: string;
   steps?: StepItem[];
-  image?: { asset: { url: string }; alt?: string };
+  image?: { asset: { _id: string; url: string }; alt?: string };
   calloutLabel?: string;
   calloutText?: string;
 }
 
 export interface GalleryImage {
   _key: string;
-  image?: { asset: { url: string } };
+  image?: { asset: { _id: string; url: string } };
   altText?: string;
 }
 
@@ -199,7 +199,7 @@ const STEP_FIELDS = `_key, num, title, body`;
 
 const CARD_FIELDS = `_key, num, title, body`;
 
-const IMAGE_FIELDS = `asset->{ url }, alt`;
+const IMAGE_FIELDS = `asset->{ _id, url }, alt`;
 
 // ─── Queries ──────────────────────────────────────────────────
 
@@ -271,7 +271,7 @@ export async function getPageBySlug(slug: string): Promise<Page | null> {
         ctaLabel,
         ctaDestination,
         // galleryBlock
-        images[]{ _key, image{ asset->{ url } }, altText },
+        images[]{ _key, image{ asset->{ _id, url } }, altText },
         // contactBlock
         formHeading,
         formSubtext,

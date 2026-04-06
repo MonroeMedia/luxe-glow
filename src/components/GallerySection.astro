@@ -1,5 +1,6 @@
 ---
 import type { GalleryBlock, SiteSettings } from '@lib/queries';
+import { urlFor } from '@lib/sanity';
 
 interface Props {
   block?: GalleryBlock | null;
@@ -31,17 +32,21 @@ const placeholderCount = Math.max(0, 3 - images.length);
     </div>
 
     <div class="gallery-grid">
-      {images.map(({ image, altText }, i) => (
+      {images.map(({ image, altText }, i) => {
+        const imgUrl = image?.asset?._id
+          ? urlFor(image).width(900).format('webp').quality(85).url()
+          : null;
+        return (
         <div class="gallery-card" role="img" aria-label={altText ?? `Before and after spray tan result — client ${i + 1}`}>
-          {image?.asset?.url && (
-            <img src={image.asset.url} alt={altText ?? `Spray tan result ${i + 1}`} loading="lazy" />
+          {imgUrl && (
+            <img src={imgUrl} alt={altText ?? `Spray tan result ${i + 1}`} loading="lazy" />
           )}
           <div class="card-tags" aria-hidden="true">
             <span class="tag tag-before">Before</span>
             <span class="tag tag-after">After</span>
           </div>
         </div>
-      ))}
+      );})}
       {Array.from({ length: placeholderCount }).map((_, i) => (
         <div class="gallery-card gallery-card--placeholder" role="img" aria-label={`Before and after spray tan result — client ${images.length + i + 1}`}>
           <div class="card-sheen" aria-hidden="true"></div>

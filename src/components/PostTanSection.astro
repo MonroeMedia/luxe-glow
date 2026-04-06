@@ -1,5 +1,6 @@
 ---
 import type { PostTanBlock } from '@lib/queries';
+import { urlFor } from '@lib/sanity';
 
 interface Props {
   block?: PostTanBlock | null;
@@ -12,7 +13,9 @@ const heading      = block?.heading      ?? 'Protect Your Investment';
 const subtext      = block?.subtext      ?? 'How you treat your tan in the first 24 hours determines how beautiful and long-lasting it will be. Follow these steps and your glow will thank you.';
 const calloutLabel = block?.calloutLabel ?? 'Note:';
 const calloutText  = block?.calloutText  ?? 'All of the above applies to your first day post-tan. After that you can return to your regular hygiene routine — just keep up the moisturizer.';
-const imageUrl     = block?.image?.asset?.url ?? null;
+const imageUrl     = block?.image?.asset?._id
+  ? urlFor(block.image).format('webp').quality(85).url()
+  : null;
 const imageAlt     = block?.image?.alt ?? 'Moisturizing and caring for a fresh spray tan';
 
 const defaultSteps = [
