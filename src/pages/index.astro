@@ -16,24 +16,6 @@ const [page, settings] = await Promise.all([
   getSiteSettings(),
 ]);
 
-// ── DEBUG: remove after confirming images work ──────────────────
-const _sanityDataset = import.meta.env.PUBLIC_SANITY_DATASET ?? import.meta.env.SANITY_DATASET ?? 'production (fallback!)';
-console.log('[SANITY DEBUG] dataset in use:', _sanityDataset);
-console.log('[SANITY DEBUG] page fetched:', page ? 'YES' : 'NULL');
-console.log('[SANITY DEBUG] sections count:', page?.sections?.length ?? 0);
-const heroRaw = page?.sections?.find((s) => s._type === 'heroBlock');
-// @ts-ignore
-console.log('[SANITY DEBUG] heroBlock.backgroundImage:', JSON.stringify(heroRaw?.backgroundImage ?? null));
-const dayRaw = page?.sections?.find((s) => s._type === 'dayOfBlock');
-// @ts-ignore
-console.log('[SANITY DEBUG] dayOfBlock.image:', JSON.stringify(dayRaw?.image ?? null));
-const galleryRaw = page?.sections?.find((s) => s._type === 'galleryBlock');
-// @ts-ignore
-console.log('[SANITY DEBUG] galleryBlock.images count:', galleryRaw?.images?.length ?? 0);
-// @ts-ignore
-console.log('[SANITY DEBUG] galleryBlock.images[0]:', JSON.stringify(galleryRaw?.images?.[0] ?? null));
-// ── END DEBUG ───────────────────────────────────────────────────
-
 // Extract typed section blocks by _type
 const heroBlock    = page?.sections?.find((s) => s._type === 'heroBlock')    as HeroBlock    | undefined;
 const prepBlock    = page?.sections?.find((s) => s._type === 'prepBlock')    as PrepBlock    | undefined;
