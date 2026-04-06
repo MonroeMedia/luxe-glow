@@ -16,5 +16,6 @@ jobs:
         run: |
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
+          git pull --rebase origin main
           git commit --allow-empty -m "chore: rebuild site from Sanity publish [skip ci]"
           git push
