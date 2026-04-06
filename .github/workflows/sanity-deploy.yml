@@ -1,0 +1,20 @@
+name: Deploy on Sanity Publish
+
+on:
+  repository_dispatch:
+    types: [sanity-publish]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Trigger Vercel build
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git commit --allow-empty -m "chore: rebuild site from Sanity publish [skip ci]"
+          git push
