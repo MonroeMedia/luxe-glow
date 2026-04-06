@@ -4,11 +4,11 @@ import { visionTool } from '@sanity/vision';
 import { schemaTypes } from './schemas';
 
 export default defineConfig({
-  name: 'default',
-  title: 'Monroe Media Studio',
+  name: 'luxe-glow',
+  title: 'Luxe Glow Spray Tans',
 
-  projectId: process.env.SANITY_STUDIO_PROJECT_ID ?? '',
-  dataset: process.env.SANITY_STUDIO_DATASET ?? 'production',
+  projectId: 'ce73s5zj',
+  dataset: 'luxe-glow',
 
   plugins: [
     structureTool({
