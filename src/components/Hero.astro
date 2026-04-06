@@ -1,5 +1,6 @@
 ---
 import type { HeroBlock, SiteSettings } from '@lib/queries';
+import { urlFor } from '@lib/image';
 
 interface Props {
   block?: HeroBlock | null;
@@ -18,9 +19,18 @@ const secondaryCtaLabel = block?.secondaryCtaLabel ?? 'See How It Works';
 const secondaryCtaDest  = block?.secondaryCtaDestination ?? '/#prep';
 const phone            = settings?.phone         ?? '(828) 429-4759';
 const phoneRaw         = phone.replace(/\D/g, '');
+
+const bgImage = block?.backgroundImage;
+const bgUrl = bgImage?.asset?._id
+  ? urlFor(bgImage).width(1920).format('webp').quality(80).url()
+  : null;
+
+const heroStyle = bgUrl
+  ? `background-image: linear-gradient(rgba(10,10,10,0.7), rgba(10,10,10,0.5)), url('${bgUrl}'); background-size: cover; background-position: center;`
+  : '';
 ---
 
-<section id="home" class="hero">
+<section id="home" class="hero" style={heroStyle}>
   <div class="hero-grid" aria-hidden="true"></div>
   <div class="hero-glow" aria-hidden="true"></div>
   <div class="hero-grain" aria-hidden="true"></div>

@@ -52,6 +52,11 @@ export interface HeroBlock {
   primaryCtaDestination?: string;
   secondaryCtaLabel?: string;
   secondaryCtaDestination?: string;
+  backgroundImage?: {
+    asset?: { _id?: string; url?: string };
+    hotspot?: { x: number; y: number; width: number; height: number };
+    alt?: string;
+  };
 }
 
 export interface PrepCard {
@@ -251,6 +256,7 @@ export async function getPageBySlug(slug: string): Promise<Page | null> {
         primaryCtaDestination,
         secondaryCtaLabel,
         secondaryCtaDestination,
+        backgroundImage{ asset->{ _id, url }, alt, hotspot },
         // prepBlock / whyChooseUsBlock
         heading,
         cards[]{ ${CARD_FIELDS} },
