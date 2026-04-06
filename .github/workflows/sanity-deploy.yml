@@ -4,18 +4,18 @@ on:
   repository_dispatch:
     types: [sanity-publish]
 
+concurrency:
+  group: sanity-deploy
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Trigger Vercel build
-        run: |
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git config user.name "github-actions[bot]"
-          git pull --rebase origin main
-          git commit --allow-empty -m "chore: rebuild site from Sanity publish [skip ci]"
-          git push
+      - name: Deploy to Vercel
+        run: npx vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: team_clp1RKrYwRsMIb3Ut5z6A98Z
+          VERCEL_PROJECT_ID: prj_LW23idarOQbShjBtGnM4lU2HQApj
