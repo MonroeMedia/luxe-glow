@@ -75,6 +75,15 @@ const areas = [...serviceAreas, 'Other'];
       <p class="form-subtext">{formSubtext}</p>
 
       <form id="contact-form" aria-label="Contact form" novalidate>
+        <!-- Honeypot — hidden from real users, bots fill it in -->
+        <input
+          type="text"
+          name="website"
+          style="display:none;position:absolute;left:-9999px;"
+          tabindex="-1"
+          autocomplete="off"
+          aria-hidden="true"
+        />
         <div class="field-row">
           <div class="field">
             <label for="firstName" class="field-label">First Name</label>
@@ -112,6 +121,9 @@ const areas = [...serviceAreas, 'Other'];
 
         <div id="form-success" class="form-msg form-success" hidden>
           Thank you! We will be in touch within 24 hours to confirm your appointment.
+        </div>
+        <div id="form-rate-limit" class="form-msg form-error" hidden>
+          Too many submissions. Please wait a minute and try again or call us at {phone}.
         </div>
         <div id="form-error" class="form-msg form-error" hidden>
           Something went wrong. Please call or text us directly at {phone}.
@@ -419,6 +431,7 @@ const areas = [...serviceAreas, 'Other'];
   const form = document.getElementById('contact-form') as HTMLFormElement | null;
   const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
   const successMsg = document.getElementById('form-success') as HTMLElement | null;
+  const rateLimitMsg = document.getElementById('form-rate-limit') as HTMLElement | null;
   const errorMsg = document.getElementById('form-error') as HTMLElement | null;
 
   form?.addEventListener('submit', async (e) => {
@@ -428,6 +441,7 @@ const areas = [...serviceAreas, 'Other'];
     submitBtn.textContent = 'Sending...';
     submitBtn.disabled = true;
     if (successMsg) successMsg.hidden = true;
+    if (rateLimitMsg) rateLimitMsg.hidden = true;
     if (errorMsg) errorMsg.hidden = true;
 
     const data = {
@@ -436,6 +450,7 @@ const areas = [...serviceAreas, 'Other'];
       phone:     (form.elements.namedItem('phone')     as HTMLInputElement).value,
       area:      (form.elements.namedItem('area')      as HTMLSelectElement).value,
       message:   (form.elements.namedItem('message')   as HTMLTextAreaElement).value,
+      website:   (form.elements.namedItem('website')   as HTMLInputElement).value,
     };
 
     try {
@@ -446,14 +461,15 @@ const areas = [...serviceAreas, 'Other'];
       });
 
       if (res.ok) {
-        Array.from(form.elements).forEach((el) => {
-          (el as HTMLElement).style.display = 'none';
-        });
         form.querySelectorAll('.field, .field-row, .submit-btn').forEach((el) => {
           (el as HTMLElement).style.display = 'none';
         });
         submitBtn.style.display = 'none';
         if (successMsg) successMsg.hidden = false;
+      } else if (res.status === 429) {
+        submitBtn.textContent = 'Request Appointment';
+        submitBtn.disabled = false;
+        if (rateLimitMsg) rateLimitMsg.hidden = false;
       } else {
         throw new Error('Server error');
       }
