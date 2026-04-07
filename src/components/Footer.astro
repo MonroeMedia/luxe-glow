@@ -11,7 +11,6 @@ const year           = new Date().getFullYear();
 const logoText       = settings?.logoText ?? 'LUXE GLOW';
 const phone          = settings?.phone ?? '(828) 429-4759';
 const phoneRaw       = phone.replace(/\D/g, '');
-const instagramUrl   = settings?.social?.instagram ?? '#';
 const facebookUrl    = settings?.social?.facebook ?? '#';
 const serviceAreas   = settings?.serviceAreas?.length
   ? settings.serviceAreas
@@ -74,8 +73,6 @@ const navLinks = [
         <p class="col-label">Contact</p>
         <ul class="col-list" role="list">
           <li><a href={`tel:${phoneRaw}`}>{phone}</a></li>
-          {instagramUrl !== '#' && <li><a href={instagramUrl} target="_blank" rel="noopener noreferrer">Instagram</a></li>}
-          {instagramUrl === '#' && <li><a href="#">Instagram</a></li>}
           {facebookUrl !== '#' && <li><a href={facebookUrl} target="_blank" rel="noopener noreferrer">Facebook</a></li>}
           {facebookUrl === '#' && <li><a href="#">Facebook</a></li>}
         </ul>
@@ -87,7 +84,6 @@ const navLinks = [
     <div class="footer-bottom">
       <p class="footer-copy">{copyrightText}</p>
       <div class="footer-social">
-        <a href={instagramUrl} target={instagramUrl !== '#' ? '_blank' : undefined} rel={instagramUrl !== '#' ? 'noopener noreferrer' : undefined}>Instagram</a>
         <a href={facebookUrl} target={facebookUrl !== '#' ? '_blank' : undefined} rel={facebookUrl !== '#' ? 'noopener noreferrer' : undefined}>Facebook</a>
       </div>
     </div>

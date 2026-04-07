@@ -22,7 +22,6 @@ const state       = settings?.state ?? 'NC';
 const serviceAreas = settings?.serviceAreas?.length
   ? settings.serviceAreas
   : ['Rutherfordton', 'Spindale', 'Forest City', 'Lake Lure', 'Tryon', 'Morganton'];
-const instagramUrl = settings?.social?.instagram ?? '#';
 const facebookUrl  = settings?.social?.facebook ?? '#';
 
 // Heading may contain a newline for the two-line layout
@@ -64,7 +63,6 @@ const areas = [...serviceAreas, 'Other'];
       </ul>
 
       <div class="contact-social">
-        <a href={instagramUrl} class="social-link" target={instagramUrl !== '#' ? '_blank' : undefined} rel={instagramUrl !== '#' ? 'noopener noreferrer' : undefined}>Instagram</a>
         <a href={facebookUrl} class="social-link" target={facebookUrl !== '#' ? '_blank' : undefined} rel={facebookUrl !== '#' ? 'noopener noreferrer' : undefined}>Facebook</a>
       </div>
     </div>
