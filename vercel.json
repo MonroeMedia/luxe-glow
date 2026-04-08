@@ -4,15 +4,6 @@
   "framework": "astro",
   "regions": ["iad1"],
 
-  "redirects": [
-    {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.luxeglowtanning.com" }],
-      "destination": "https://luxeglowtanning.com/:path*",
-      "permanent": true
-    }
-  ],
-
   "headers": [
     {
       "source": "/(.*)",
