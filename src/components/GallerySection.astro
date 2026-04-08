@@ -137,7 +137,12 @@ const placeholderCount = Math.max(0, 3 - images.length);
     align-items: center;
     justify-content: flex-end;
     padding: 20px;
-    border: 1px solid rgba(201, 168, 76, 0.3);
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    transition: border-color 0.4s ease;
+  }
+
+  .gallery-card:hover {
+    border-color: rgba(201, 168, 76, 0.5);
   }
 
   .gallery-card img {
@@ -147,6 +152,25 @@ const placeholderCount = Math.max(0, 3 - images.length);
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .gallery-card:hover img {
+    transform: scale(1.05);
+  }
+
+  .gallery-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.5) 100%);
+    z-index: 0;
+    opacity: 0.6;
+    transition: opacity 0.4s ease;
+  }
+
+  .gallery-card:hover::before {
+    opacity: 1;
   }
 
   .gallery-card--placeholder {
@@ -178,7 +202,7 @@ const placeholderCount = Math.max(0, 3 - images.length);
     width: 100%;
     gap: 2px;
     position: relative;
-    z-index: 1;
+    z-index: 2;
   }
 
   .tag {

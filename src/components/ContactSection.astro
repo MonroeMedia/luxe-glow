@@ -276,9 +276,10 @@ const areas = [...serviceAreas, 'Other'];
 
   .form-wrap {
     position: relative;
-    background: #161616;
-    border: 1px solid rgba(201, 168, 76, 0.3);
-    padding: 48px;
+    background: #141414;
+    border: 1px solid rgba(201, 168, 76, 0.25);
+    padding: 52px;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.5);
   }
 
   .form-wrap::before {
@@ -351,6 +352,7 @@ const areas = [...serviceAreas, 'Other'];
 
   .field-input:focus {
     border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.08), inset 0 1px 0 rgba(201, 168, 76, 0.05);
   }
 
   .field-input::placeholder {

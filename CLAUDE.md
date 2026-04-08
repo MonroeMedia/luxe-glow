@@ -237,3 +237,66 @@ Each section is a pair: an Astro component + a Sanity schema object type.
 3. **Commit after each completed section** — use conventional commits: `feat:`, `fix:`, `chore:`, `style:`.
 4. **Never commit `.env`** — it is gitignored. Credentials go in Vercel env vars for production.
 5. **Studio schemas and Astro types stay in sync** — when you add a Sanity field, update the TypeScript interface in `queries.ts` at the same time.
+
+## Known gotchas
+
+### Google Fonts
+Never load Google Fonts via @import in global.css — it fails 
+silently through PostCSS/Vite and can block the entire stylesheet.
+
+Always load via <link> tags with preconnect hints in the Base 
+layout <head>:
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=..." rel="stylesheet">
+
+### DNS and Namecheap
+When a domain uses Vercel nameservers, all DNS records 
+must be added in Vercel → project → Settings → Domains 
+→ DNS Records. Namecheap DNS panel is bypassed entirely 
+and will not accept new records.
+
+### Environment variables in Vercel
+After pasting any environment variable value into Vercel,
+click into the field and press End to confirm no line 
+breaks are present before saving. Line breaks cause 
+silent failures that are hard to debug.
+
+### SANITY_DATASET naming
+Never use "production" as a dataset name for client projects.
+Always name the dataset after the client — e.g. luxe-glow,
+h2os-lawncare. Only SANITY_DATASET changes per client.
+SANITY_PROJECT_ID and SANITY_TOKEN are Monroe Media constants.
+
+### Sanity webhook — removed from workflow
+Sanity webhook to Vercel deploy hook was tested 
+on Luxe Glow and could not be reliably configured.
+Do not include webhook setup in any skill prompts.
+Content updates require a manual redeploy from 
+Vercel dashboard after publishing in Sanity studio.
+Manual redeploy: Vercel → project → Deployments → 
+three dots on latest → Redeploy → uncheck cache → Deploy.
+Takes approximately 60 seconds.
+
+Update CLAUDE.md with two new Known Gotchas:
+
+1. vercel.json path syntax
+   Vercel uses path-to-regexp not regex.
+   For Astro asset caching always use /_astro/:path*
+   Never use regex patterns like /(.*)\\.(jpg|png)
+   in source fields — they are invalid in Vercel.
+
+2. www redirect configuration
+   Never configure www/non-www redirects in both 
+   vercel.json and the Vercel dashboard simultaneously.
+   This causes a redirect loop blocking all asset delivery.
+   Always use Vercel dashboard only for domain redirects.
+   Never add redirect rules for www to vercel.json.
+
+Also update vercel.json caching header source from:
+/(.*)\\.(jpg|jpeg|png|webp|svg|ico|woff|woff2)
+to:
+/_astro/:path*
+
+Commit and push when done.

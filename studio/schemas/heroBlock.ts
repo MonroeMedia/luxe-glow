@@ -13,6 +13,7 @@ export default defineType({
     defineField({ name: 'primaryCtaDestination', title: 'Primary CTA Destination', type: 'string', description: 'e.g. /#contact' }),
     defineField({ name: 'secondaryCtaLabel', title: 'Secondary CTA Label', type: 'string' }),
     defineField({ name: 'secondaryCtaDestination', title: 'Secondary CTA Destination', type: 'string' }),
+    defineField({ name: 'backgroundImage', title: 'Background Image', type: 'image', options: { hotspot: true }, fields: [{ name: 'alt', title: 'Alt Text', type: 'string' }]})
   ],
   preview: {
     select: { title: 'h1', subtitle: 'h1Italic' },

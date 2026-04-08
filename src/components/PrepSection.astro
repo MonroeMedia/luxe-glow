@@ -131,15 +131,33 @@ const cards = block?.cards?.length ? block.cards : defaultCards;
   .card {
     position: relative;
     background: var(--color-surface);
-    border: 1px solid rgba(201, 168, 76, 0.3);
-    padding: 48px 36px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    padding: 52px 40px 48px;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease, border-color 0.4s ease;
+    overflow: hidden;
   }
 
   .card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 40px rgba(201, 168, 76, 0.1);
-    border-color: rgba(201, 168, 76, 0.6);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(201, 168, 76, 0.1);
+    border-color: rgba(201, 168, 76, 0.5);
+  }
+
+  .card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--color-primary), transparent);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .card:hover::after {
+    transform: scaleX(1);
   }
 
   .card::before {
@@ -155,10 +173,17 @@ const cards = block?.cards?.length ? block.cards : defaultCards;
   .card-num {
     display: block;
     font-family: var(--font-display);
-    font-size: 52px;
-    color: rgba(201, 168, 76, 0.12);
+    font-size: 64px;
+    font-style: italic;
+    color: rgba(201, 168, 76, 0.15);
     line-height: 1;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
+    letter-spacing: -2px;
+    transition: color 0.4s ease;
+  }
+
+  .card:hover .card-num {
+    color: rgba(201, 168, 76, 0.25);
   }
 
   .card-title {

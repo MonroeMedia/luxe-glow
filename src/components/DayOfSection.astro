@@ -175,6 +175,12 @@ const steps = block?.steps?.length ? block.steps : defaultSteps;
     font-size: 12px;
     font-weight: 600;
     color: var(--color-primary);
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .step:hover .step-num {
+    background: var(--color-primary);
+    color: var(--color-bg);
   }
 
   .step-title {
@@ -211,6 +217,11 @@ const steps = block?.steps?.length ? block.steps : defaultSteps;
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .dayof-image:hover img {
+    transform: scale(1.04);
   }
 
   .dayof-image--placeholder {
